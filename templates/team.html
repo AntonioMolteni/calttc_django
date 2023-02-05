@@ -1,0 +1,184 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load socialaccount %}
+{% load account %}
+
+{% block content %}
+
+<!-- Team -->
+<div class="container-fluid padding">
+	<div class="row emphasis">
+		<div class="col-12">
+			<h1><b>Team</b></h1>
+			<hr class="horizontalrule">
+			<h4>
+				<b>FOP (Fundraising, Outreach, Publicity)</b>
+				<ul>
+					<li>Goal: To create a more public profile, to promote club brand image, and to generate revenue</li>
+					<li>We strive to promote this sport and help cultivate an inclusive community of people who all love table tennis</li>
+				</ul>
+
+				<b>Coaching</b>
+				<ul>
+					<li>Goal: Keep members coming to each training session and keep their enthusiasm for table tennis up by communicating the fundamentals of table tennis</li>
+					<li>Create an inclusive and supportive atmosphere for both coaches and players during training sessions</li>
+				</ul>
+
+				<b>Social</b>
+				<ul>
+					<li>Goal: To have members interact with each other and create a community outside of table tennis</li>
+					<li>By holding events that create a community that fosters meaningful personal interactions with each other</li>
+				</ul>
+				 
+			</h4>
+			
+		</div>
+	</div>
+</div>
+
+
+<!-- Executives -->
+<a class="anchor" id="executives"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			<h1><b>Executives</b></h1>
+			<hr class="horizontalrule">
+		</div>
+	</div>
+</div>
+
+<!-- Profile Cards -->
+<div class="container-fluid padding">
+	<div class="row d-flex justify-content-center">
+		{% for profile in executive_profiles %}
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+			<div class="card">
+				{% if profile.profile_picture %}
+				<img class="card-img-top rounded-circle" src="{% get_media_prefix %}{{ profile.profile_picture }}">
+				{% else %}
+				<img class="card-img-top rounded-circle" src="{% get_media_prefix %}/profile_pictures/blank_profile.jpg">
+				{% endif %}
+				<div class="card-body">
+					<h5 class="card-title"><b>{{ profile.user.display_name }}</b></h5>
+					<p class="card-subtitle">{{ profile.position }}</p>
+					{% if profile.show_rating %}
+						USATT Rating: {{ profile.user.rating }}<br/>
+					{% endif %}
+					{% if profile.about %}
+					<a class="btn btn-secondary btn-sm" style="margin-bottom: 0.5rem;" data-toggle="collapse" href="#{{profile.get_id}}E" role="button" aria-expanded="false" aria-controls="collapseExample">
+						About
+					</a>
+					<div class="collapse" id="{{profile.get_id}}E">	
+						{{ profile.about }}
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+
+<!-- Officers -->
+<a class="anchor" id="officers"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			<h1><b>Officers</b></h1>
+			<hr class="horizontalrule">
+		</div>
+	</div>
+</div>
+
+<!-- Profile Cards -->
+<div class="container-fluid padding">
+	<div class="row d-flex justify-content-center">
+		{% for profile in officer_profiles %}
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+			<div class="card">
+				{% if profile.profile_picture %}
+				<img class="card-img-top rounded-circle" src="{% get_media_prefix %}{{ profile.profile_picture }}">
+				{% else %}
+				<img class="card-img-top rounded-circle" src="{% get_media_prefix %}/profile_pictures/blank_profile.jpg">
+				{% endif %}
+				<div class="card-body">
+					<h5 class="card-title"><b>{{ profile.user.display_name }}</b></h5>
+					<p class="card-subtitle">{{ profile.position }}</p>
+					{% if profile.show_rating %}
+						USATT Rating: {{ profile.user.rating }}<br/>
+					{% endif %}
+					{% if profile.about %}
+					<a class="btn btn-secondary btn-sm" style="margin-bottom: 0.5rem;" data-toggle="collapse" href="#{{profile.get_id}}O" role="button" aria-expanded="false" aria-controls="collapseExample">
+						About
+					</a>
+					<div class="collapse" id="{{profile.get_id}}O">	
+						{{ profile.about }}
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+<!-- Competitive Team -->
+<a class="anchor" id="competitive-team"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			<h1><b>Competitive Team</b></h1>
+			<hr class="horizontalrule">
+		</div>
+	</div>
+</div>
+
+<!-- Profile Cards -->
+<div class="container-fluid padding">
+	<div class="row d-flex justify-content-center">
+		{% for profile in competitive_team_profiles %}
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+			<div class="card">
+				{% if profile.profile_picture %}
+				<img class="card-img-top rounded-circle" src="{% get_media_prefix %}{{ profile.profile_picture }}">
+				{% else %}
+				<img class="card-img-top rounded-circle" src="{% get_media_prefix %}/profile_pictures/blank_profile.jpg">
+				{% endif %}
+				<div class="card-body">
+					<h5 class="card-title"><b>{{ profile.user.display_name }}</b></h5>
+					<p class="card-subtitle">{{ profile.position }}</p>
+					{% if profile.show_rating %}
+						USATT Rating: {{ profile.user.rating }}<br/>
+					{% endif %}
+					{% if profile.about %}
+					<a class="btn btn-secondary btn-sm" style="margin-bottom: 0.5rem;" data-toggle="collapse" href="#{{profile.get_id}}C" role="button" aria-expanded="false" aria-controls="collapseExample">
+						About
+					</a>
+					<div class="collapse" id="{{profile.get_id}}C">	
+						{{ profile.about }}
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+<!-- Edit Profiles -->
+<div class="container-fluid padding">
+	<div class="row d-flex justify-content-center">
+		<div class="col-12">
+			{% if user.is_staff %}
+						<b><a href={% url 'edit-profiles' %} class="btn btn-outline-info btn-lg" style="margin-bottom: 1rem;">Edit Profiles</a></b>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

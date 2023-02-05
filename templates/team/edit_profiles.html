@@ -1,0 +1,80 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+
+<div class="container-fluid padding">
+	<div class="row">
+		<div class="col-12">
+			<h1><b>Edit Profiles</b></h1>
+			<h4><b>Key</b></h4>
+		</div>
+		
+		<div class="col-6 col-md-4 col-lg-3">
+			<li>E: Executive</li>
+			<li>O: Officer</li>
+			<li>C: Competitive Team</li>
+		</div>
+
+	</div>
+	<form method="post" action="" enctype="multipart/form-data">
+		<div class="row">
+			
+			{% csrf_token %}
+			{{ formset.management_form }}
+			{% for form in formset %}
+			<div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+				<div class="card">
+					{% if form.instance.profile_picture %}
+						<img class="card-img-top rounded-circle" src="{% get_media_prefix %}{{ form.instance.profile_picture }}">
+					{% else %}
+						<img class="card-img-top rounded-circle" src="{% get_media_prefix %}/profile_pictures/blank_profile.jpg">
+					{% endif %}
+					<div class="card-body" style="padding:0;">
+						{{form.id}}
+						{{ form.profile_picture }}
+						<b style="color:#FF0000">{{ form.profile_picture.errors }}</b>
+						{{ form.user }}
+						<b style="color:#FF0000">{{ form.user.errors }}</b>
+						{{ form.position }}
+						<b style="color:#FF0000">{{ form.position.errors }}</b>
+						{{ form.show_rating.label }}: {{ form.show_rating }}
+						<b style="color:#FF0000">{{ form.show_rating.errors }}</b>
+						{{ form.about }}
+						<b style="color:#FF0000">{{ form.about.errors }}</b>
+						
+						<table width="100%">
+							<thead>
+								<tr>
+									<th class="text-center">E</th>
+									<th class="text-center">O</th>
+									<th class="text-center">C</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="text-center">{{ form.executive }}</td>
+									<td class="text-center">{{ form.officer }}</td>
+									<td class="text-center">{{ form.competitive_team }}</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<b style="color:#FF0000">
+							{{ form.executive.errors }}
+							{{ form.officer.errors }}
+							{{ form.team.errors }}
+						</b>
+						<br/>
+						
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+			<div class="col-12">
+				<input type="submit" value="Save" class="btn btn-outline-info btn-lg" style="margin-top:1rem;"/>
+			</div>
+		</div>
+	</form>
+</div>
+
+{% endblock content %}

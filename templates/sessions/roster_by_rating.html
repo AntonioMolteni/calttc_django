@@ -1,0 +1,49 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="container-fluid padding">
+	<div class="row">
+		<div class="col-12">
+			<h1><b>Roster By Rating</b></h1>
+		</div>
+		<!-- Do Not Touch This Template (Extremely Delicate) -->
+		<div class="col-lg-6">
+			<form method="post" action="">
+				{% csrf_token %}
+				{{ formset.management_form }}
+				<table class="table training-table" style="padding:0;">
+					<thead>
+						<tr style="border-top: none;">
+							<th>Roster</th>
+							<th class="text-center">Status</th>
+							<th class="text-center">Rating</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for form in formset %}
+						<tr>
+							<td style="padding-left:.75rem;">
+								{{ form.instance.display_name }}
+								<br/><b style="color:#FF0000">{{ form.rating.errors }}</b>
+							</td>
+							<td class="text-center">
+								{% if form.instance.is_member %}
+									🏓
+								{% elif form.instance.paid_drop_in_fee %}
+									✅
+								{% endif %}
+							</td>
+							<td class="text-center" style="width:4rem;">
+								{{form.id}}
+								{{form.rating}}
+							</td>		
+						</tr>
+						{% endfor %}
+				</table>
+				<br/><input type="submit" value="Save" class="btn btn-outline-info btn-lg"/>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

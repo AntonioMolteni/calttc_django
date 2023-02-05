@@ -1,0 +1,96 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="container-fluid padding">
+	<div class="row">
+		<div class="col-12">
+			<h1><b>Edit Schedule</b></h1>
+			<h4><b>Key</b></h4>
+		</div>
+
+		<div class="col-6 col-md-4 col-lg-3">
+			<li>OP:Open Play</li>
+			<li>NT:Novice Training</li>
+			<li>IT:Intermediate Training</li>
+		</div>
+
+		<div class="col-6 col-md-4 col-lg-3">
+			<li>AT:Advanced Training</li>
+			<li>TO:Tournaments</li>
+		</div>
+
+		<div class="col-12">
+			<form method="post" action="">
+				{% csrf_token %}
+				{{ formset.management_form }}
+				
+				<table class="table training-table" style="padding:0;">
+					<thead>
+						<tr style="border-top: none;">
+							<th>TimeSlot</th>
+							<th></th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						{% for form in formset %}
+						{{form.id}}
+						<tr>
+							<td colspan="7">
+								{{ form.time_slot }}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								{{ form.day }}
+							</td>	
+							<td>
+								{{ form.location }}
+							</td>
+							<td style="vertical-align: bottom; text-align:center;">OP</td>
+							<td style="vertical-align: bottom; text-align:center;">NT</td>
+							<td style="vertical-align: bottom; text-align:center;">IT</td>
+							<td style="vertical-align: bottom; text-align:center;">AT</td>
+							<td style="vertical-align: bottom; text-align:center;">TO</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								{{ form.availability }}
+								<b style="color:#FF0000">
+									{{ form.time_slot.errors }}
+									{{ form.day.errors }}
+									{{ form.location.errors }}
+									{{ form.availability.errors }}
+									{{ form.novice_training.errors }}
+									{{ form.intermediate_training.errors }}
+									{{ form.advanced_training.errors }}
+									{{ form.tournaments.errors }}
+								</b>
+							</td>
+							<td style="vertical-align: top; text-align:center;">
+								{{ form.open_play }}
+							</td>
+							<td style="vertical-align: top; text-align:center;">
+								{{ form.novice_training }}
+							</td>
+							<td style="vertical-align: top; text-align:center;">
+								{{ form.intermediate_training }}
+							</td>
+							<td style="vertical-align: top; text-align:center;">
+								{{ form.advanced_training }}
+							</td>
+							<td style="vertical-align: top; text-align:center;">
+								{{ form.tournaments }}
+							</td>
+						</tr>
+						
+						{% endfor %}
+					</tbody>
+				</table>
+				<br/><input type="submit" value="Save" class="btn btn-outline-info btn-lg"/>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

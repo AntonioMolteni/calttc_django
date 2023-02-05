@@ -1,0 +1,101 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+
+<div class="container-fluid padding">
+	<form action="" method=POST enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col-12">
+				<h1><b>Settings</b></h1>
+			</div>
+			<!-- User Profile (private) -->
+			<div class="col-md-6 align-self-center">
+				<img class="rounded-circle" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" style="width:3rem; float: left;  margin:0 1rem 1rem 0;"/>
+				<b>{{request.user.display_name}}</b><br/>
+				{{request.user.email}}<br/>
+				<a href={% url 'privacy-policy' %}>Privacy Policy</a>
+				<br/>
+			</div>
+			<div class="col-md-6">
+				{% if request.user.is_member %}
+					<b>Member</b> 🏓 <br/>
+				{% elif request.user.paid_drop_in_fee %}
+					Drop-In Approved ✅ <br/>
+				{% endif %}
+
+				<b>{{ form.newsletter_subscription.label }}:</b>
+				{{ form.newsletter_subscription }}
+				<b style="color:#FF0000">{{ form.newsletter_subscription.errors }}</b><br/>
+
+				<b>{{ form.rating.label }} (USATT):</b>
+				<span>{{ form.rating }}</span>
+				<b style="color:#FF0000">{{ form.rating.errors }}</b><br/>
+			</div>
+
+			<!-- Team Profile (public)-->
+			{% if profile_instance %}
+			<div class="col-12">
+				<br/>
+				<h3><b>Team Profile</b></h3>
+			</div>
+			<div class="col-md-6 align-self-center">
+				<table width="100%">
+					<thead>
+						<tr>
+							<th class="text-left">
+								{% if profile_form.instance.profile_picture %}
+									<img class="rounded-circle" src="{% get_media_prefix %}{{ profile_form.instance.profile_picture }}" style="width: 3rem; height:auto; margin-right:1rem;"/>
+								{% else %}
+									<img class="rounded-circle" src="{% get_media_prefix %}/profile_pictures/blank_profile.jpg" style="width: 3rem; height:auto; margin-right:1rem;"/>
+								{% endif %}
+							</th>
+							<th class="text-left">
+								{{ profile_form.profile_picture }}<br/>
+								<b style="color:#FF0000">{{ profile_form.profile_picture.errors }}</b>
+							</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+				
+			<div class="col-md-6 align-self-center">
+				<b>{{ profile_form.position.label }}:</b>
+				<span>{{ profile_form.position }}</span>
+				<b style="color:#FF0000">{{ profile_form.position.errors }}</b>
+
+				<b>{{ profile_form.about.label }}:</b> 
+				<span>{{ profile_form.about }}</span>
+				<b style="color:#FF0000">{{ profile_form.about.errors }}</b>
+
+				<b>{{ profile_form.show_rating.label }}:</b> 
+				<span>{{ profile_form.show_rating }}</span>
+				<b style="color:#FF0000">{{ profile_form.show_rating.errors }}</b><br/>
+
+				<table width="100%">
+					<thead>
+						<tr>
+							<th class="text-left">Executive: {{ profile_form.executive }}</th>
+							<th class="text-left">Officer: {{ profile_form.officer }}</th>
+							<th class="text-left">Competitive Team: {{ profile_form.competitive_team }}</th>
+						</tr>
+					</thead>
+				</table>
+
+				<b style="color:#FF0000">
+					{{ profile_form.executive.errors }}
+					{{ profile_form.officer.errors }}
+					{{ profile_form.team.errors }}
+				</b>
+			</div>
+			{% endif %}	
+			
+			<div class="col-12">
+				<input type="submit" value="Save" class="btn btn-secondary btn-lg" style="margin-top:1rem;"" >
+			</div>
+
+		</div>
+	</form>
+</div>
+
+{% endblock content %}

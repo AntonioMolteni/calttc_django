@@ -1,0 +1,428 @@
+{% load static %}
+{% load socialaccount %}
+{% load account %}
+{% load custom_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- Adjusts the content to the device's width at an initial magnification of 1 times -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Title of the webpage that appears on tabs.-->
+	<title>
+		{% if page_title %}
+			{{ page_title }} | 
+		{% endif %}
+		Cal Table Tennis 
+	</title>
+	
+	<!-- Google Search Optimization -->
+	<meta name="description" content="UC Berkeley's official Table Tennis Club.  Open to players of all skill levels. Come to Open Play or sign-up for training. ">
+ 	<meta name="keywords" content="Berkeley, Cal, Table Tennis, Ping Pong, Club, Team">
+
+	<!-- Preload first image. -->
+	{% if primary_carousel_image %}
+		<link rel="preload" as="image" href="{% get_media_prefix %}{{ primary_carousel_image.image }}">
+	{% endif %}
+
+	<!-- Favicon (generated from https://realfavicongenerator.net)-->
+	<link rel="apple-touch-icon" sizes="180x180" href={% static "/apple-touch-icon.png" %}>
+	<link rel="icon" type="image/png" sizes="32x32" href={% static "/graphics/favicon/favicon-32x32.png" %}>
+	<link rel="icon" type="image/png" sizes="16x16" href={% static "/graphics/favicon/favicon-16x16.png" %}>
+	<link rel="manifest" href={% static "/graphics/favicon/site.webmanifest" %}>
+	<link rel="shortcut icon" type="image/png" href={% static "graphics/favicon/favicon.png" %}>
+	<meta name="msapplication-TileColor" content="#da532c">
+	<meta name="theme-color" content="#ffffff">
+
+	<!-- CSS controls the Look of the website, to change elements style, do it in styles.css -->
+	<!-- bootstrap (for formatting on mobile)-->
+	<!-- original: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"> -->
+	<!-- local file -->
+	<link rel="stylesheet" href={% static "plugins/bootstrap/bootstrap.min.css" %}>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script> -->
+	<!-- local file -->
+	<script type="text/javascript" src={% static "plugins/jquery/jquery-3.6.0.min.js" %}></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+	<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script> -->
+	<!-- local file -->
+	<script src={% static "plugins/bootstrap/bootstrap.bundle.min.js" %}></script>
+	<!-- fontawesome (for social media icons) -->
+	<!-- original: <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script> -->
+	<!-- local file -->
+	<script src={% static "plugins/fontawesome/all.js" %}></script>
+
+	<!-- Google tag (gtag.js) for google analytics-->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-HKGJV609ZP"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-HKGJV609ZP');
+	</script>
+
+	<!-- main CSS (for overall style changes)-->
+	<!-- If the stylesheet is updated and causing browser issues, it is because you need to -->
+	<!-- update the version number below(1.0 becomes 1.1 etc.). This will force the browser -->
+	<!-- to reset its cache by reloading the style.css file. -->
+	
+	<link rel="stylesheet" type="text/css" href= "{% static "css/style.css" %}?v=5.4">
+
+
+</head>
+<!-- If you are unfamiliar with html, bootstrap or css, watch this tutorial as 
+the website structure is loosely based from it:
+https://www.youtube.com/watch?v=9cKsq14Kfsw -->
+
+<body>
+	<!-- Unsubscribe verification pop -->
+	{% if unsubscribe_verification %}
+		<body onload="return confirm('{{ request.user.email }} has been successfully unsubscribed from the newsletter')"></body>
+	{% endif %}
+	{% if subscribe_verification %}
+		<body onload="return confirm('{{ request.user.email }} has been successfully subscribed to the newsletter')"></body>
+	{% endif %}
+
+	<!-- Navigation -->
+
+	<!-- The bootstrap navbar allows for better viewing on mobile devices. 
+	I would suggest using the class reference: 
+	https://www.w3schools.com/bootstrap4/bootstrap_ref_all_classes.asp
+
+	I would look into the 'navbar' and 'grid systems' as well:
+	navbar: https://www.w3schools.com/bootstrap4/bootstrap_navbar.asp
+	grid: https://www.w3schools.com/bootstrap4/bootstrap_grid_system.asp
+
+	Here is a website with some navbar examples if you are having issues:
+	https://getbootstrap.com/docs/4.0/examples/navbars/ -->
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+		<!-- Logo Image Source(should be a .png) -->
+		{% url "home" as url %}
+		<a class="navbar-brand" href={{ url }}><img src={% static "graphics/logo.png" %}></a>
+		<!-- Button to Collapse the Hamburger Navbar Dropdown Menu -->
+		<button class="navbar-toggler" style="border-color: transparent;" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+			aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			<!-- Hamburger Menu Icon -->
+			<span class="navbar-toggler-icon"></span>
+
+			{% if user.is_staff and num_notifications %}
+			<span class="badge badge-danger">{{ num_notifications }}</span>
+			{% endif %}
+		</button>
+			
+		<!-- Indicates content that can be collapsed for smaller screens-->
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<!-- Links for the different pages of the site:
+					the page that you are currently on should contain "active" in its nav-item class
+					each "nav-item" only links to one other html page, the dropdown is there to 
+					provide links to different sections of that page. -->
+			<ul class="navbar-nav ml-auto">
+				<!-- Schedule -->
+				{% url "schedule" as url %}
+				<li class="nav-item dropdown {% if request.path == url %}active{% endif %}">
+					<a class="nav-link dropdown-toggle" href={{ url }} id="dropdown04" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						Schedule</a>
+					<div class="dropdown-menu" aria-labelledby="dropdown04">
+						<a class="dropdown-item" href={% anchor 'schedule' 'open-play' %}>Open Play</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href={% anchor 'schedule' 'novice-training' %}>Novice Training</a>
+						<a class="dropdown-item" href={% anchor 'schedule' 'intermediate-training' %}>Intermediate Training</a>
+						<a class="dropdown-item" href={% anchor 'schedule' 'advanced-training' %}>Advanced Training</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href={% anchor 'schedule' 'tournaments' %}>Tournaments</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href={% anchor 'schedule' 'calendar' %}>Calendar</a>
+					</div>
+				</li>
+
+				<!-- Membership -->
+				{% url "membership" as url %}
+				<li class="nav-item dropdown {% if request.path == url %}active{% endif %}">
+					<a class="nav-link dropdown-toggle" href={{ url }} id="dropdown04" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						Membership</a>
+					<div class="dropdown-menu" aria-labelledby="dropdown04">
+						<a class="dropdown-item" href={% anchor 'membership' 'dues' %}>Dues</a>
+						<a class="dropdown-item" href={% anchor 'membership' 'registration' %}>Registration</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href={% anchor 'membership' 'drop-in-training' %}>Drop-In Training</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href={% anchor 'membership' 'donations' %}>Donations</a>
+					</div>
+				</li>
+
+				<!-- Sessions -->
+				{% url "sessions" as url %}
+				<li class="nav-item dropdown {% if request.path == url %}active{% endif %}">
+					<a class="nav-link dropdown-toggle" href={{ url }} id="dropdown04" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						Sessions</a>
+					<div class="dropdown-menu" aria-labelledby="dropdown04">
+						<a class="dropdown-item" href={% anchor 'sessions' 'sign-up' %}>Sign-Up</a>
+					</div>
+				</li>
+
+				<!-- Team -->
+				{% url "team" as url %}
+				<li class="nav-item dropdown {% if request.path == url %}active{% endif %}" >
+					<a class="nav-link dropdown-toggle" href={{ url }} id="dropdown04" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false" >
+						Team</a>
+					<div class="dropdown-menu" aria-labelledby="dropdown04">
+						<a class="dropdown-item" href={% anchor 'team' 'executives' %}>Executives</a>
+						<a class="dropdown-item" href={% anchor 'team' 'officers' %}>Officers</a>
+						<a class="dropdown-item" href={% anchor 'team' 'competitive-team' %}>Competitive Team</a>
+
+					</div>
+				</li>
+
+				<!-- Login/Account -->
+				<li class="nav-item dropdown">
+					{% if user.is_authenticated %}
+					<!-- account/google profile picture -->
+					<a class="nav-link dropdown-toggle" href="{% provider_login_url 'google' action='reauthenticate' next=request.path %}" id="dropdown04" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						<span class="d-md-none">
+							Account
+							{% if user.is_staff and num_notifications %}
+							<span class="badge badge-danger">{{ num_notifications }}</span>
+							{% endif %}
+						</span>
+						<span class="corner-badged-item d-none d-md-block">
+							<img class="rounded-circle" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" style="height: 3rem;"/>
+							{% if user.is_staff and num_notifications %}
+							<span class="corner-badge badge badge-danger">{{ num_notifications }}</span>
+							{% endif %}
+						</span>
+						
+					</a>
+					<!-- dropdown menu -->
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown04">
+							<a class="dropdown-item" href="{% url 'account-settings' %}?next={{request.path}}">Settings</a>
+							<form id="logoutid" action="{% url 'logout' %}" method="post">{% csrf_token %}</form>
+							<a class="dropdown-item" href="{% url 'account_logout' %}?next={{request.path}}">
+								Logout {{ user.email }}
+								{% if user.is_member %}
+									🏓
+								{% elif user.paid_drop_in_fee %}
+									✅
+								{% endif %}
+							</a>
+				
+							{% if user.is_staff or user.is_admin%}
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="{% url 'manage-users' %}?next={{request.path}}">Manage Users
+									{% if num_notifications %}
+										<span class="badge badge-danger">{{ num_notifications }}</span>
+									{% endif %}
+								</a>
+							{% endif %}		
+							{% if user.is_admin and not user.is_superuser %}
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="{% url 'admin:index' %}?next={{request.path}}">Admin Portal</a>
+							{% endif %}			
+								{% if user.is_superuser %}
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="{% url 'admin:index' %}?next={{request.path}}">Superuser Portal</a>
+							{% endif %}
+						</div>
+						
+					{% else %}
+					<a class="nav-link" href="{% provider_login_url 'google' action='reauthenticate' next=request.path %}">Log In</a>
+
+					{% endif %}
+					</li>
+
+			</ul>
+		</div>
+	</nav>
+
+<!--- Announcements -->
+{% if announcements %}
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-lg-6">
+			{% for announcement in announcements %}
+				{% if announcement.title %}
+					<h3><b>{{ announcement.title }}</b></h3>
+				{% endif %}
+				{% if announcement.content or announcement.link_url %}
+				<p>
+					{% if announcement.content %}
+						{{ announcement.content }}
+					{% endif %}
+					{% if announcement.link_url and announcement.link_text%}
+						<br/>
+						{% if announcement.link_opens_in_new_tab %}
+							<a href="{{ announcement.link_url }}" target="_blank" rel="noreferrer noopener">{{ announcement.link_text }}</a>
+						{% else %}
+							<a href="{{ announcement.link_url }}">{{ announcement.link_text }}</a>
+						{% endif%}
+					{% elif announcement.link_url%}
+						<br/>
+						{% if announcement.link_opens_in_new_tab %}
+							<a href="{{ announcement.link_url }}" target="_blank" rel="noreferrer noopener">{{ announcement.link_url }}</a>
+						{% else %}
+							<a href="{{ announcement.link_url }}">{{ announcement.link_url }}</a>
+						{% endif %}
+					{% endif %}
+				</p>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endif %}
+
+{% block content %} {% endblock content %}
+
+</body>
+
+<!--- Footer -->
+<footer>
+	<div class="container-fluid padding">
+		<div class="row text-center">
+
+			<!-- Footer Image -->
+			<div class="col-md-12 col-xs-12">
+				<img class="placeholder" style="width:100%; height: auto" src="{% get_media_prefix %}{{ footer_image.image }}">
+			</div>
+
+			<!-- Open Play Hours -->
+			<div class="col-md-6 col-lg-3 order-lg-1">
+				<br/>
+				<h4><b>Open Play Hours</b></h4>
+				<a href={% url 'schedule' %} style="color: inherit; text-decoration: inherit;">
+					{% for time_slot in open_play_time_slots %}
+						{{ time_slot.get_day_display }} {{ time_slot.time_slot}}<br/>
+					{% endfor %}
+				</a>
+			</div>
+			
+			<a class="anchor" id="newsletter"></a>
+			<!-- Email Newsletter -->
+			<div class="col-md-6 col-lg-3 order-lg-3" >
+				<br/>
+				<h4><b>Email Newsletter</b></h4>
+				{% if user.newsletter_subscription %}
+					<a href="{% url 'unsubscribe' %}?next={{request.path}}" class="btn btn-secondary btn-lg center">Unsubscribe</a>
+				{% else %}
+					<a href="{% url 'subscribe' %}?next={{request.path}}" class="btn btn-secondary btn-lg center">Subscribe</a>
+				{% endif %}
+			</div>
+
+			<!-- Contact Us -->
+			<div class="col-md-12 col-lg-6 order-lg-2 social">
+				<br/>
+				<h4><b>Contact Us</b></h4>
+				
+				<a href="https://discord.gg/ExU73ZQdTv" 
+				target="_blank" rel="noreferrer noopener">
+					<img class="contact" src={% static "graphics/company_icons/discord.svg" %}>
+				</a>
+				<a href="https://www.instagram.com/calttc/?hl=en" 
+				target="_blank" rel="noreferrer noopener">
+					<img class="contact" src={% static "graphics/company_icons/instagram.svg" %}>
+				</a>
+				<a href="https://www.facebook.com/groups/calttc/?ref=share"  
+				target="_blank" rel="noreferrer noopener">
+					<img class="contact" src={% static "graphics/company_icons/facebook.svg" %}>
+				</a>
+				<a href="https://www.youtube.com/channel/UCutzjqRQ5dr9ksZ-rZjlhjQ" 
+				target="_blank" rel="noreferrer noopener">
+					<img class="contact" src={% static "graphics/company_icons/youtube.svg" %}>
+				</a>
+				<a href="mailto:calttc@gmail.com?subject=Inquiry: {{user.email}}">
+					<img class="contact" src={% static "graphics/company_icons/gmail.svg" %}>
+				</a>
+
+			</div>
+
+			<!-- Copyright -->
+			<div class="col-12 order-4">
+				<br/>
+				<p style="color: #6c757d;">Copyright &copy; 2009-{{ current_datetime.year }} Cal Table Tennis Club<br/>
+				We are a student group acting independently of the University of California. We take full responsibility for our organization and this website.</p>
+			</div>
+
+			
+			<!-- Graphics Table Locations & OCF -->
+			<div class="col-12 order-5"
+				<div class="container d-flex" style="display:flex; align-items:top; justify-content: center">
+					
+					<!-- Graphics -->
+					<a href={% url 'graphics' %} style="color: inherit; text-decoration: inherit;">
+						<figure class="figure">
+							<img style="height:3.3rem; width:auto;" src={% static "graphics/assets/ping_pong_paddle.svg" %}>
+							<figcaption><b>Graphics</b></figcaption>
+						</figure>
+					</a>
+					&emsp;
+					&emsp;
+
+					<!-- Table Locations -->
+					<a href="https://www.google.com/maps/d/viewer?mid=111dwi-_btwt0nSpODW-dqJ5cJxehN5k&usp=sharing" target="_blank" rel="noreferrer noopener" style="color: inherit; text-decoration: inherit;">
+						<figure class="figure">
+							<img src={% static "graphics/assets/ping_pong_table.svg" %} 
+							style="height:3.3rem;">
+							<figcaption>
+								<b>Table <br/>
+									Locations</b>
+							</figcaption>
+						</figure>
+					</a>
+					&emsp;
+					&emsp;
+					
+					<!-- OCF -->
+					<a href="https://www.ocf.berkeley.edu" target="_blank" rel="noreferrer noopener" style="color: inherit; text-decoration: inherit;">
+						<figure class="figure">
+							<img src={% static "graphics/assets/ocf_penguin.svg" %} alt="Hosted by the OCF" style="border: 0; height:3.3rem">
+							<figcaption >
+								<b>
+									Hosted by <br/>
+									<span style="vertical-align:top;">
+										the <big>OCF</big> 
+									</span>
+								</b>
+							</figcaption>
+						</figure>
+					</a>
+					<br/>
+					<br/>
+
+				</div>		
+			</div>
+
+		</div>
+	</div
+
+	<!-- Script to collapse the mobile navbar menu when a dropdown item is clicked inside of it. -->
+	<!-- https://www.sitepoint.com/community/t/bootstrap-navbar-menu-does-not-collapse-after-clicking/360062/2 -->
+	<script>
+		$(".navbar-collapse .dropdown-item").click(function () {
+			$(".navbar-collapse").collapse("hide");
+		});
+	</script>
+
+	<!-- Script to allow dropdown menu bars to be clicked only after the dropdown is activated on 
+	Desktop.  Is disabled on mobile to allow the nav-item dropdowns to be collapsed.-->
+	<!-- https://github.com/arnabwahid/wordpress-bootstrap/issues/62 -->
+	<script>
+		$('.navbar ul.navbar-nav > .dropdown > a[href]').click(function () {
+			var dropdown = $(this).next('.dropdown-menu');
+			if ($(dropdown).css('display') !== 'none') {
+				if (this.href) {
+					location.href = this.href;
+				}
+			}
+		});
+	</script>
+
+</footer>
+
+</html>

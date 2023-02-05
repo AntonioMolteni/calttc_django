@@ -1,0 +1,187 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load socialaccount %}
+{% load account %}
+{% load custom_tags %}
+
+{% block content %}
+
+
+<!-- Membership -->
+<div class="container-fluid padding">
+	<div class="row emphasis">
+		<div class="col-12">
+			<h1><b>Membership</b></h1>
+			<hr class="horizontalrule">
+			<h4>
+				Membership is the best way to support the club as we do not receive funding from the RSF. 
+				Membership is for active players that plan to come to many sessions and want to take full advantage of our training sessions.
+				<br/><br/>
+				<b>Dues provide the club with funding for:</b>
+				<ul>
+					<li>New tables & nets</li>
+					<li>Balls and paddles</li>
+					<li>Social events and retreats</li>
+				</ul>
+				<b>Members also receive perks such as:</b>
+				<ul>
+					<li>Access to cal table tennis merchandise</li>
+					<li>No drop-in fee for Training sessions</li>
+					<li>30% off all Joola product purchases</li>
+				</ul>
+			</h4>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- Dues -->
+<a class="anchor" id="dues"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			<h1><b>Dues</b></h1>
+			<hr class="horizontalrule">
+			<h4>
+			The '22-'23 dues are listed below.
+			If you are ready to pay dues, follow the directions underneath <a href={% anchor 'membership' 'registration' %}>registration</a>.
+			</h4>
+		</div>
+		<div class="col-lg-6">
+			<h4>
+				<table class="table">
+
+					<thead>
+						<tr>
+							<th scope="col">Term</th>
+							<th scope="col">Cost</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr>
+							<td>Semester</td>
+							<td>$60</td>
+						</tr>
+					
+						<tr>
+							<td>Annual</td>
+							<td>$100</td>
+						</tr>
+					
+					</tbody>
+					
+				</table>
+			</h4>
+		</div>
+	</div>
+</div>
+
+<!-- Registration -->
+<a class="anchor" id="registration"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			<h1><b>Registration</b></h1>
+			<hr class="horizontalrule">
+			<h4>
+				Cal table tennis membership is limited to enrolled students at UC Berkeley and those with an active 
+				<a href="https://recsports.berkeley.edu/memberships/" target="_blank" rel="noreferrer noopener">RSF membership</a>.  
+				If you are an enrolled student, you automatically have an active RSF membership because the fees are included in your tuition.
+				Before you decide to register for a cal table tennis membership come to an open play to see how you like the club.
+			</h4>
+				
+			<h4>
+				<br/>
+				<b>Instructions</b><br/>
+	
+				<ol>
+					<li>
+						Sign-in to the cal rec sports website through either link below to pay dues.  This will add you the official RSF member list.
+						<ul>
+							<li><a href=https://shop.rs.berkeley.edu/Program/GetProgramDetails?courseId=8b4904eb-90e1-403f-8aa1-3a0be34e0ea9&semesterId=22972123-6987-40bb-a370-17de5a68e915 target="_blank" rel="noreferrer noopener">
+								Fall 2022 semester dues
+							</a></li>
+							<li><a href=https://shop.rs.berkeley.edu/Program/GetProgramDetails?courseId=692333be-ed54-4780-bb27-7cee2bc587ed&semesterId=22972123-6987-40bb-a370-17de5a68e915 target="_blank" rel="noreferrer noopener">
+								Annual dues
+							</a></li>
+						</ul>
+					</li>
+					<li>
+						Once you paid dues, register below.  This will allow us to update your membership status on the cal table tennis website.
+					</li>
+				</ol>
+					
+				{% if not user.is_registered and not user.is_member %}
+					<a href={% url 'register' %} class="btn btn-secondary">Register</a>	
+				{% elif user.is_registered and not user.is_member%}
+					</h4>
+						<p>
+							You have submitted your membership request.  Our president will approve your request and update your membership status if you have paid dues.
+							Once your request has been processed you will receive an email confirmation.  If you are approved your profile will be displayed with 🏓.
+						</p>
+					<h4>
+					<a href={% url 'unregister' %} class="btn btn-secondary">Unregister</a>
+				{% else %}
+					</h4>
+						<p>
+							No need to register because you are already a member of Cal Table Tennis 🏓.
+						</p>
+					<h4>
+				{% endif %}
+					
+			</h4>
+		</div>
+	</div>
+</div>
+
+<!-- Drop-In Training-->
+<a class="anchor" id="drop-in-training"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			<h1><b>Drop-In Training</b></h1>
+			<hr class="horizontalrule">
+			<h4>
+				Looking to just come for one or two training sessions? Dropping in is your best option if you do not want to pay our club dues. 
+				For just a $3 drop-in fee, you can sign-up for one or two of our training sessions.  Start by checking out the 
+				<a href={% url 'schedule' %}>schedule</a> and 
+				<a href={% url 'sessions' %}>sessions</a> pages.
+			</h4>
+			<p>If you are a member, you do not need to pay the drop-in training fee.</p>
+			<h4>
+			 
+			</h4>
+		</div>
+	</div>
+</div>
+
+<!-- Donations-->
+<a class="anchor" id="donations"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			<h1><b>Donations</b></h1>
+			<hr class="horizontalrule">
+			<h4>
+				Want to help support our club? Consider making a donation so that we can maintain the club!
+				Venmo our club president, Hugo Zhan, below:
+			</h4>
+			<a href="https://venmo.com/?txn=pay&audience=public&recipients=Hugo-Zhan&note=Donation" class="btn btn-primary btn-sm" style="margin-bottom: 1rem" >
+				<img src={% static "graphics/company_icons/venmo.svg" %} style="height: 1rem;">
+			</a>&emsp;
+			
+		</div>
+	</div>
+</div>
+
+
+
+
+{% endblock content %}

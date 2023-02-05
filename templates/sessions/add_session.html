@@ -1,0 +1,45 @@
+{% extends 'base.html' %} 
+{% block content %}{% load static %}
+
+<div class="container-fluid padding">
+	<div class="row">
+		<div class="col-12">
+			<h1><b>Add Session</b></h1>
+				<form action="" method=POST>
+					{% csrf_token %}
+					<b>{{ form.session_type.label }}:</b>
+					{{ form.session_type }}
+					<b style="color:#FF0000">{{ form.session_type.errors }}</b>
+
+					<b>{{ form.location.label }}:</b>
+					{{ form.location }}
+					<b style="color:#FF0000">{{ form.location.errors }}</b>
+						
+					<b>{{ form.time.label }}:</b>
+					{{ form.time }}
+					<b style="color:#FF0000">{{ form.time.errors }}</b>
+
+					<b>{{ form.duration.label }}:</b>
+					{{ form.duration }}
+					<b style="color:#FF0000">{{ form.duration.errors }}</b>
+					
+					<b>{{ form.capacity.label }}:</b>
+					{{ form.capacity }}
+					<b style="color:#FF0000">{{ form.capacity.errors }}</b>
+					
+					<b>{{ form.coaches.label }}:</b>
+					{{ form.coaches }}
+					<b style="color:#FF0000">{{ form.coaches.errors }}</b>
+
+					<b>{{ form.note.label }}:</b>
+					{{ form.note }}
+					<b style="color:#FF0000">{{ form.note.errors }}</b>
+					<br/>
+					
+					<input type="submit" value="Add Session" class="btn btn-outline-success btn-lg">
+				</form>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

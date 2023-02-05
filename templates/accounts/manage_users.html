@@ -1,0 +1,169 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="container-fluid padding">
+	<div class="row">
+		<div class="col-12">
+			<h1><b>Manage Users</b></h1>
+		</div>
+
+		<!-- Drop-In Training Approval -->
+		<div class="col-md-6">
+			<a class="anchor" id="drop-in-approval"></a>
+			<h4>
+				<b>Drop-In Training Approval</b>
+			</h4>
+			<p>The approve and refuse buttons do not send an email to the user.</p>
+			{% if not checked_in_users %}
+				<p>No users requesting drop-in approval.</p>
+			{% else %}
+				<table class="table">
+					<tbody>
+					{% for user in checked_in_users %}
+						<tr style="padding: 0rem">
+							<td style="padding: 0.1rem; vertical-align: middle; font-size:.875rem;">{{ user.display_name }}</td>
+							<td style="padding:0.3rem; vertical-align: middle; text-align: right;" >
+								<a href={% url 'approve-drop-in' user.email %} class="btn btn-outline-success btn-sm">Approve</a>
+								&emsp;
+								<a href={% url 'refuse-drop-in' user.email %} class="btn btn-outline-danger btn-sm">Refuse</a><br/>
+							</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+		</div>
+
+		<!-- Membership Approval -->
+		<div class="col-md-6">
+			<a class="anchor" id="membership-approval"></a>
+			<h4>
+				<b>Membership Approval</b><br/>
+			</h4>
+			<p>The approve and refuse buttons both send confirmation/rejection emails to the user.</p>
+			{% if not user.is_admin %}
+			<p>You must be an admin to approve membership</p>
+			{% endif %}
+			{% if not registered_users %}		
+				<p>No users requesting registration.</p>
+			{% endif %}
+			
+			<table class="table padding">
+				<tbody>
+				{% for user in registered_users %}
+					<tr style="padding: 0rem">
+						<td style="padding: 0.1rem; vertical-align: middle; font-size:.875rem;">{{ user.display_name }}</td>
+						<td style="padding:0.3rem; vertical-align: middle; text-align: right;" >
+							{% if request.user.is_admin %}
+								<a href={% url 'approve-membership' user.email %} class="btn btn-outline-success btn-sm">Approve</a>
+								&emsp;
+								<a href={% url 'refuse-membership' user.email %} class="btn btn-outline-danger btn-sm">Refuse</a><br/>
+							{% else %}
+								<a class="btn btn-outline-success btn-sm disabled">Approve</a>
+								&emsp;
+								<a class="btn btn-outline-danger btn-sm disabled">Refuse</a><br/>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+
+	
+	<form method="post" action="">
+	{% csrf_token %}
+	{{ formset.management_form }}
+	<div class="row">
+		<!-- Members & Approved Players-->
+		<div class="col-md-5 col-lg-4">
+			<table class="table training-table" style="padding:0;">
+				<thead>
+					<tr style="border-top: none;">
+						<th>Members & Approved Players</th>
+						<th class="text-center">Status</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+				{% for user in approved_users %}
+					<tr>
+						<td>
+							<img class="rounded-circle" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" style="height:1.5rem;"/>
+							&emsp;
+							{{ user.display_name }}</td>
+						<td class="text-center">
+							✅
+						</td>
+					</tr>
+				{% endfor %}
+
+				{% for member in members %}
+					<tr>
+						<td>
+							<img class="rounded-circle" src="{{ member.socialaccount_set.all.0.get_avatar_url }}" style="height:1.5rem;"/>
+							&emsp;
+							{{ member.display_name }}
+						</td>
+						<td class="text-center">
+							🏓
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			<input type="submit" value="Save" class="btn btn-sm btn-outline-info btn-lg"/>
+			<br/><br/>
+		</div>
+		
+		<!-- Do Not Touch This Template (Extremely Delicate) -->
+		<!-- All Users -->
+		<div class="col-md-7 col-lg-6" >
+			<table class="table training-table" style="padding:0;">
+				<thead>
+					<tr style="border-top: none;">
+						<th>All Users</th>
+						<th class="text-center">Membership</th>
+						<th class="text-center">Newsletter</th>
+						<th class="text-center">Rating</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for form in formset %}
+					{{ form.id }}
+					<tr>
+						<td>
+							{{ form.instance.display_name }}
+							<b style="color:#FF0000">{{ form.is_member.errors }}</b>
+							<b style="color:#FF0000">{{ form.newsletter_subscription.errors }}</b>
+							<b style="color:#FF0000">{{ form.rating.errors }}</b>
+						</td>
+						<td class="text-center">
+							{{ form.is_member }}
+						</td>
+						<td class="text-center">
+							{{ form.newsletter_subscription }}
+						</td>
+						<td class="text-center" style="width:4rem;">
+							{{ form.rating }}
+						</td>		
+						
+					</tr>
+					{% endfor %}
+			</table>
+			<input type="submit" value="Save" class="btn btn-sm btn-outline-info btn-lg"/>
+		</div>
+	</div>
+	</form>
+</div>
+
+<script>
+$('input.readonly').on('click', function(evt) {
+	evt.preventDefault();
+})
+</script>
+
+
+{% endblock content %}

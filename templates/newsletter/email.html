@@ -1,0 +1,13 @@
+{% load static %}
+<div style="text-align: center;">
+	<img src="https://calttc.berkeley.edu/static/graphics/logos/logo_banner.png" alt=""/>
+</div>
+
+{% autoescape off %}
+{{ content }}
+{% endautoescape %}
+
+<div style="text-align: center;">
+	<br/><br/><br/><br/>
+	<a href="{{ unsubscribe_url }}">Unsubscribe {{ email }}</a>
+</div>

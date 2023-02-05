@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="45"
+   height="45"
+   viewBox="0 0 468.81593 468.81593"
+   version="1.1"
+   id="svg16"
+   sodipodi:docname="Facebook.svg"
+   inkscape:version="1.2.1 (9c6d41e4, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs20" />
+  <sodipodi:namedview
+     id="namedview18"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="10.346385"
+     inkscape:cx="-9.7618637"
+     inkscape:cy="11.356624"
+     inkscape:window-width="1280"
+     inkscape:window-height="669"
+     inkscape:window-x="0"
+     inkscape:window-y="305"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg16" />
+  <path
+     id="path185"
+     style="fill:#1877f2;stroke-width:0.0331332;fill-opacity:1"
+     d="M 234.40796,0.20836264 A 234.40798,236.81956 0 0 0 0,237.0279 234.40798,236.81956 0 0 0 197.78172,467.98248 V 305.50206 H 138.24576 V 237.0279 h 59.53596 v -52.1928 c 0,-7.42245 0.54975,-14.42035 1.61155,-20.99924 1.06181,-6.57888 2.64725,-12.73477 4.70648,-18.44601 2.05923,-5.71125 4.58937,-10.98077 7.58163,-15.80031 2.99226,-4.81953 6.43105,-9.19532 10.29197,-13.09907 3.86092,-3.90378 8.15399,-7.34144 12.81919,-10.30535 4.66519,-2.96393 9.70324,-5.4376 15.10833,-7.437619 10.81016,-4.000034 23.04137,-6.050004 36.4248,-6.050004 25.64607,0 52.4854,4.625382 52.4854,4.625382 v 58.279811 h -29.57569 c -7.28507,0 -13.31048,1.13874 -18.25818,3.14525 -4.94771,2.00653 -8.82093,4.87049 -11.77534,8.32569 -2.9544,3.45522 -4.99454,7.51342 -6.29971,11.85948 -1.30517,4.34608 -1.86794,8.99353 -1.86794,13.67263 v 44.42216 h 64.99327 l -10.38354,68.47416 H 271.03421 V 467.98248 A 234.40798,236.81956 0 0 0 468.81593,237.0279 234.40798,236.81956 0 0 0 234.40796,0.20836264 Z" />
+</svg>

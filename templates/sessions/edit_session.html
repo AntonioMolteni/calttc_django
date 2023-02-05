@@ -1,0 +1,71 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="container-fluid padding">
+	<form action="" method=POST>
+		<div class="row">
+			
+			<div class="col-12">
+				<h1><b>Edit Session</b></h1>
+			</div>
+
+			<div class="col-md-4">
+				{% csrf_token %}
+
+				<b>{{ form.session_type.label }}:</b>
+				{{ form.session_type }}
+				<b style="color:#FF0000">{{ form.session_type.errors }}</b>
+
+				<b>{{ form.location.label }}:</b>
+				{{ form.location }}
+				<b style="color:#FF0000">{{ form.location.errors }}</b>
+
+				<b>{{ form.time.label }}:</b>
+				{{ form.time }}
+				<b style="color:#FF0000">{{ form.time.errors }}</b>
+
+				<b>{{ form.duration.label }}:</b>
+				{{ form.duration }}
+				<b style="color:#FF0000">{{ form.duration.errors }}</b>
+				
+				<b>{{ form.capacity.label }}:</b>
+				{{ form.capacity }}
+				<b style="color:#FF0000">{{ form.capacity.errors }}</b>
+
+				<b>{{ form.is_closed.label }}:</b>
+				{{ form.is_closed }}
+				<b style="color:#FF0000">{{ form.is_closed.errors }}</b>
+
+				<b>{{ form.is_cancelled.label }}:</b>
+				{{ form.is_cancelled }}
+				<b style="color:#FF0000">{{ form.is_cancelled.errors }}</b><br/>
+				
+				<b>{{ form.coaches.label }}:</b>
+				{{ form.coaches }}
+				<b style="color:#FF0000">{{ form.coaches.errors }}</b>
+
+				<b>{{ form.note.label }}:</b>
+				{{ form.note }}
+				<b style="color:#FF0000">{{ form.note.errors }}</b>
+
+				<br/><input type="submit" value="Edit Training Session" class="btn btn-outline-info btn-lg">
+			</div>
+
+			<div class="col-md-4">
+				<b>{{ form.players.label }}:</b>
+				{{ form.players }}
+				<b style="color:#FF0000">{{ form.players.errors }}</b>
+			</div>
+
+			<div class="col-md-4">
+				<b>{{ form.queue.label }}:</b>
+				{{ form.queue }}
+				<b style="color:#FF0000">{{ form.queue.errors }}</b>
+			</div>
+
+		</div>
+	</form>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,234 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load socialaccount %}
+{% load account %}
+{% load custom_tags %}
+
+{% block content %}
+
+<!-- Schedule -->
+<div class="container-fluid padding">
+	<div class="row emphasis">
+		<div class="col-12">
+			<h1><b>Schedule</b></h1>
+			<hr class="horizontalrule">
+			<h4>
+				<ul>
+					<li>This is the schedule for club gatherings where we will open up all of the club tables</li>
+					<li>The RSF also has two tables available during
+					<a href="https://recsports.berkeley.edu/schedules/table-tennis/" target="_blank" rel="noreferrer noopener">RSF Open Rec Table Tennis Hours</a> 
+					so feel free to come in outside of club hours to use these tables</li>
+				</ul>
+			</h4>
+		</div>
+	</div>
+</div>
+
+
+
+<!--- Open Play -->
+<a class="anchor" id="open-play"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding align-items-center">
+		<div class="col-12">
+			
+			<h1><b>Open Play</b></h1>
+			<hr class="horizontalrule">
+				<ul>
+					{% for time_slot in open_play_time_slots %}
+						<li>
+							<h4 style="margin-bottom: 0;">{{ time_slot.get_day_display }} {{ time_slot.time_slot}}</h4>
+							{% if time_slot.availability %}
+							<p style="margin-bottom: 0;">- Open to {{ time_slot.get_availability_display }}</p>
+							{% endif %}
+							{% if time_slot.location %}
+							<p style="margin-bottom: 0;">- {{ time_slot.get_location_display }}</p>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+				<h4>
+				Whether you are interested in casual play or competitive matches, open play is great for players of all
+				skill levels.  Bring your own paddle or borrow one of our loaner paddles.  Singles is permitted if no one is waiting for a table. 
+				<br><br>
+			</h4>
+
+		</div>
+
+	</div>
+</div>
+
+<!--- Novice Training -->
+<a class="anchor" id="novice-training"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			<h1><b>Novice Training</b></h1>
+			<hr class="horizontalrule">
+				<ul>
+					{% for time_slot in novice_training_time_slots %}
+						<li>
+							<h4 style="margin-bottom: 0;">{{ time_slot.get_day_display }} {{ time_slot.time_slot}}</h4>
+							{% if time_slot.availability %}
+							<p style="margin-bottom: 0;">- Open to {{ time_slot.get_availability_display }}</p>
+							{% endif %}
+							{% if time_slot.location %}
+							<p style="margin-bottom: 0;">- {{ time_slot.get_location_display }}</p>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+				<h4>
+				Created for new players to practice and learn basic table tennis skills and techniques. 
+				Our dedicated coaching team will guide you through a multitude of drills as well as some basic strategy.
+				<br><br>
+				<a href={% anchor 'sessions' 'sign-up' %} class="btn btn-secondary btn-lg center">Sign-Up</a>
+			</h4>
+
+		</div>
+	</div>
+</div>
+
+<!--- Intermediate Training -->
+<a class="anchor" id="intermediate-training"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			<h1><b>Intermediate Training</b></h1>
+			<hr class="horizontalrule">
+			<ul>
+				{% for time_slot in intermediate_training_time_slots %}
+					<li>
+						<h4 style="margin-bottom: 0;">{{ time_slot.get_day_display }} {{ time_slot.time_slot}}</h4>
+						{% if time_slot.availability %}
+						<p style="margin-bottom: 0;">- Open to {{ time_slot.get_availability_display }}</p>
+						{% endif %}
+						{% if time_slot.location %}
+						<p style="margin-bottom: 0;">- {{ time_slot.get_location_display }}</p>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+			<h4>
+				If you already have a couple years of experience under your belt, intermediate training is for you. 
+				Our coaches emphasize serves as well as consistency in this training rather than the basic technique.
+				<br><br>
+				<a href={% anchor 'sessions' 'sign-up' %} class="btn btn-secondary btn-lg center">Sign-Up</a>
+			</h4>
+		</div>
+	</div>
+</div>
+
+<!--- Advanced Training -->
+<a class="anchor" id="advanced-training"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			<h1><b>Advanced Training</b></h1>
+			<hr class="horizontalrule">
+			<ul>
+				{% for time_slot in advanced_training_time_slots %}
+					<li>
+						<h4 style="margin-bottom: 0;">{{ time_slot.get_day_display }} {{ time_slot.time_slot}}</h4>
+						{% if time_slot.availability %}
+						<p style="margin-bottom: 0;">- Open to {{ time_slot.get_availability_display }}</p>
+						{% endif %}
+						{% if time_slot.location %}
+						<p style="margin-bottom: 0;">- {{ time_slot.get_location_display }}</p>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+			<h4>
+				Designed for experienced players who are consistent with general skills in table tennis like forehand loop, serves, blocks etc. 
+				To attend advanced training, please contact our coach Ruben Cho via facebook. 
+				Players from the competitive team will be there to help train and practice with.
+				<br><br>
+				<a href={% anchor 'sessions' 'sign-up' %} class="btn btn-secondary btn-lg center">Sign-Up</a>
+			</h4>
+
+		</div>
+	</div>
+</div>
+
+<!--- Tournaments -->
+<a class="anchor" id="tournaments"></a>
+
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			<h1><b>Tournaments</b></h1>
+			<hr class="horizontalrule">
+			<ul>
+				{% for time_slot in tournaments_time_slots %}
+					<li>
+						<h4 style="margin-bottom: 0;">{{ time_slot.get_day_display }} {{ time_slot.time_slot}}</h4>
+						{% if time_slot.availability %}
+						<p style="margin-bottom: 0;">- Open to {{ time_slot.get_availability_display }}</p>
+						{% endif %}
+						{% if time_slot.location %}
+						<p style="margin-bottom: 0;">- {{ time_slot.get_location_display }}</p>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+			<h4>
+				If you are interested in playing more serious matches, we organize tournaments and assign faux-ratings to gauge your skill level.  
+				We primarily host round-robins to give new players a change to meet a lot of people and make it the most fun.
+				Our competitive team is the official UC Berkeley Table Tennis Team that participates in NCTTA tournaments: 
+				If you would like to participate, we have tryouts in the fall.  For more information, contact us directly or look out for an announcement on social platforms.
+				<br><br>
+				<a href={% anchor 'sessions' 'sign-up' %} class="btn btn-secondary btn-lg center">Sign-Up</a>
+			</h4>
+
+		</div>
+	</div>
+</div>
+<div class="container-fluid padding">
+	<div class="row padding">
+		<div class="col-12">
+			{% if user.is_staff %}
+			<b><a href={% url 'edit-schedule' %} class="btn btn-outline-info btn-lg" style="margin-bottom: 1rem;">Edit Schedule</a></b>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+<!--- Calendar -->
+<a class="anchor" id="calendar"></a>
+
+<!-- Responsive google calendar embedding -->
+<!-- https://blog.vendilli.com/google-calendar-responsive -->
+<!-- Bootstrap optimization for desktop and mobile using "d-*" class -->
+<!-- https://getbootstrap.com/docs/4.0/utilities/display/ -->
+
+
+<div class="container-fluid padding">
+	<div class="row padding align align-items-center">
+		
+		<!-- Desktop Iframe -->
+		<div class="col d-none d-md-block">
+			<h1><b>Calendar</b></h1>
+			<hr class="horizontalrule">
+			<div class="googleCalendar" style="height:25rem;">
+				<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FLos_Angeles&showTitle=0&showPrint=0&showTabs=1&showTz=0&src=Y2FsdHRjQGdtYWlsLmNvbQ&src=YTFlY3EzNHJ0MjE3cHVsdDFiZHBjMmd0MzRAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%233F51B5&color=%23D50000"  style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+			</div>
+		</div>
+
+		<!-- Mobile Iframe -->
+		<div class="col iframe d-md-none">
+			<h1><b>Calendar</b></h1>
+			<hr class="horizontalrule">
+			<div class="googleCalendar" style="height: 15rem;">
+				<iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FLos_Angeles&showPrint=0&showTz=0&showTabs=0&showTitle=0&showNav=1&showDate=1&mode=AGENDA&src=Y2FsdHRjQGdtYWlsLmNvbQ&src=YTFlY3EzNHJ0MjE3cHVsdDFiZHBjMmd0MzRAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%233F51B5&color=%23D50000" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock content %}

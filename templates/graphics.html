@@ -1,0 +1,145 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load socialaccount %}
+{% load account %}
+{% load custom_tags %}
+
+{% block content %}
+
+<div class="container-fluid padding">
+	<div class="row">
+		<div class="col-12">
+			<h1><b>Graphics</b></h1>
+		</div>
+	</div>
+		
+	<!-- Logos -->
+	<div class="row align-items-center">
+		<div class="col-12">
+			<h4><b>Logos</b></h4>
+		</div>
+		{% for file in logos %}
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2 align-self-center">
+			<div class="card">
+				{% if not '.zip' in file %}
+					<img class="card-img-top" src="{% get_static_prefix %}graphics/logos/{{ file }}" alt="">
+				{% endif %}
+				<div class="card-body">
+					<a rel="noopener noreferrer" target="_blank" href="{% get_static_prefix %}graphics/logos/{{ file }}">{{ file }}</a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<!-- Sports Club Logos -->
+	<div class="row align-items-center">
+		<div class="col-12">
+			<h4><b>Sports Club Logos</b></h4>
+		</div>
+		{% for file in logos_sports_club %}
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2 align-self-center">
+			<div class="card">
+				{% if not '.zip' in file %}
+					<img class="card-img-top" src="{% get_static_prefix %}graphics/logos_sports_club/{{ file }}" alt="">
+				{% endif %}
+				<div class="card-body">
+					<a rel="noopener noreferrer" target="_blank" href="{% get_static_prefix %}graphics/logos_sports_club/{{ file }}">{{ file }}</a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<!-- Favicon -->
+	<div class="row align-items-center">
+		<div class="col-12">
+			<h4><b>Favicon</b></h4>
+		</div>
+		{% for file in favicon %}
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2 align-self-center">
+			<div class="card">
+				{% if not '.zip' in file %}
+					<img class="card-img-top" src="{% get_static_prefix %}graphics/favicon/{{ file }}" alt="">
+				{% endif %}
+				<div class="card-body">
+					<a rel="noopener noreferrer" target="_blank" href="{% get_static_prefix %}graphics/favicon/{{ file }}">{{ file }}</a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<!-- Company Icons -->
+	<div class="row align-items-center">
+		<div class="col-12">
+			<h4><b>Company Icons</b></h4>
+		</div>
+		{% for file in company_icons %}
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2 align-self-center">
+			<div class="card">
+				{% if not '.zip' in file %}
+					<img class="card-img-top" src="{% get_static_prefix %}graphics/company_icons/{{ file }}" alt="">
+				{% endif %}
+				<div class="card-body">
+					<a rel="noopener noreferrer" target="_blank" href="{% get_static_prefix %}graphics/company_icons/{{ file }}">{{ file }}</a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<!-- Signs -->
+	<div class="row align-items-center">
+		<div class="col-12">
+			<h4><b>Signs</b></h4>
+		</div>
+		{% for file in signs %}
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2 align-self-center">
+			<div class="card">
+				{% if not '.zip' in file %}
+					<img class="card-img-top" src="{% get_static_prefix %}graphics/signs/{{ file }}" alt="">
+				{% endif %}
+				<div class="card-body">
+					<a rel="noopener noreferrer" target="_blank" href="{% get_static_prefix %}graphics/signs/{{ file }}">{{ file }}</a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<!-- Assets -->
+	<div class="row align-items-center">
+		<div class="col-12">
+			<h4><b>Assets</b></h4>
+		</div>
+		{% for file in assets %}
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2 align-self-center">
+			<div class="card">
+				{% if not '.zip' in file %}
+					<img class="card-img-top" src="{% get_static_prefix %}graphics/assets/{{ file }}" alt="">
+				{% endif %}
+				<div class="card-body">
+					<a rel="noopener noreferrer" target="_blank" href="{% get_static_prefix %}graphics/assets/{{ file }}">{{ file }}</a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<!-- All Graphics -->
+	<div class="row align-items-center">
+		<div class="col-12">
+			<h4><b>All Graphics</b></h4>
+		</div>
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2 align-self-center">
+			<div class="card">
+				<div class="card-body">
+					<a rel="noopener noreferrer" target="_blank" href="{% get_static_prefix %}graphics/一graphics.zip">一graphics.zip</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+{% endblock content %}
