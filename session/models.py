@@ -47,13 +47,13 @@ class Session(models.Model):
     return self.time.strftime("%-I:%M") + "-" + end_time.strftime("%-I:%M %p") + self.time.strftime(" %a %b %-d")
   
   def get_players(self):
-    return self.players.filter(is_active=True).order_by('-is_member', '-paid_drop_in_fee', '-has_berkeley_email', 'sign_up_date',)[:self.capacity] 
+    return self.players.filter(is_active=True).order_by('-is_member', '-has_berkeley_email', 'sign_up_date',)[:self.capacity] 
   
   def get_wait_list(self):
-    return self.players.filter(is_active=True).order_by('-is_member', '-paid_drop_in_fee' ,'-has_berkeley_email', 'sign_up_date')[self.capacity:]
+    return self.players.filter(is_active=True).order_by('-is_member', '-has_berkeley_email', 'sign_up_date')[self.capacity:]
   
   def get_queue(self):
-    return self.queue.filter(is_active=True).order_by('-is_member', '-paid_drop_in_fee', '-has_berkeley_email', 'date_joined')[:self.capacity]
+    return self.queue.filter(is_active=True).order_by('-is_member', '-has_berkeley_email', 'date_joined')[:self.capacity]
   
   def get_session_type(self):
     return "Session Type: " + self.get_session_type_display()

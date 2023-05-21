@@ -29,8 +29,7 @@ def get_footer_image_to_context(request):
 # staff notifications
 def get_staff_notifications_to_context(request):
 	num_registered_users = User.objects.filter(is_registered = True).count()
-	num_checked_in_users = User.objects.filter(is_checked_in = True).count()
-	num_users_awaiting_approval = num_registered_users + num_checked_in_users
+	num_users_awaiting_approval = num_registered_users
 	num_notifications = num_users_awaiting_approval
 	return {
 		'num_notifications' : num_notifications

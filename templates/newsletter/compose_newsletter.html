@@ -8,20 +8,20 @@
 				<h1><b>Compose Newsletter</b></h1>
 			</div>
 
-			<div class="col-md-8">
+			<div class="col-12">
 				{% csrf_token %}
 
 				<b>{{ form.subject.label }}:</b>
 				{{ form.subject }}
 				<b style="color:#FF0000">{{ form.subject.errors }}</b>
-
-				<b>{{ form.content.label }}:</b>
-				{{ form.content }}
-				<b style="color:#FF0000">{{ form.content.errors }}</b>
-
+				
 				<b>{{ form.image.label }}:</b><br/>
 				{{ form.image }}
 				<b style="color:#FF0000">{{ form.image.errors }}</b><br/>
+
+				<b>{{ form.content.label }}:</b>
+				{{ form.content }}
+				<b style="color:#FF0000">{{ form.content.errors }}</b>		
 
 				<b>{{ form.recipients.label }}:</b>
 				{{ form.recipients }}
@@ -31,27 +31,19 @@
 				{{ form.test_user_email }}
 				<b style="color:#FF0000">{{ form.test_user_email.errors }}</b>
 
+				<b>{{ form.gmail_csv.label }}:</b><br/>
+				{{ form.gmail_csv }}
+				<b style="color:#FF0000">{{ form.gmail_csv.errors }}</b><br/>
+
+				<b>{{ form.unsubscribe_link.label }}:</b>
+				{{ form.unsubscribe_link }}
+				<b style="color:#FF0000">{{ form.unsubscribe_link.errors }}</b>
+
+
 				
 				<br/><input type="submit" value="Send Email Newsletter" class="btn btn-outline-success btn-lg" onclick="return confirm('Are you sure?')" style="margin-bottom: 1rem;">
 			</div>
 
-			<div class="col-md-4">
-				<h4><b>Content Syntax</b></h4>
-				<ul>
-					<li>
-						Accepts plain text
-					</li>
-					<li>
-						Accepts any html tags (&lt;b&gt;Bold&lt;/b&gt;, &lt;i&gt;Italic&lt;/i&gt;, &lt;br/&gt;New Line, etc.)
-					</li>
-					<li>
-						Also accepts style attributes such as &lt;p style="text-align: center;"&gt;Centered&lt;/p&gt;
-					</li>
-					<li>
-						It does not accept Bootstrap responsive classes
-					</li>
-				</ul>
-			</div>
 
 		</div>
 	</form>

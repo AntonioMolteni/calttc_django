@@ -14,19 +14,6 @@ $(document).ready(function(){
 </script>
 {% endif %}
 
-<!-- venmo open in new tab once user gets back from check-in -->
-<script type="text/javascript">
-	function venmo()
-	{
-		window.location.href = "/#sign-up";
-		window.location.href = "https://venmo.com/?txn=pay&audience=public&recipients=Hugo-Zhan&amount=3.00&note=Drop-In%20Training%20Fee"; 
-	}
-</script>
-
-{% if open_venmo %}
-	<body onload="venmo()"></body>
-{% endif %}
-
 <!-- Sessions -->
 <div class="container-fluid padding">
 	<div class="row emphasis">
@@ -60,9 +47,7 @@ $(document).ready(function(){
 </div>
 
 <!-- Sign-Up -->
-<a class="anchor" id="sign-up"></a>
-
-<div class="container-fluid padding">
+<div class="container-fluid padding" id="sign-up">
 	<div class="row">
 		<div class="col-12">
 			
@@ -72,22 +57,16 @@ $(document).ready(function(){
 	
 			<ol>
 				<li>Choose the session you would like to attend and hit sign-up</li>
-				<li>Only <b>Training</b> sessions require a drop-in fee (if you are not a member🏓):
-					<ul>
-						<li><a href={% url 'check-in' %}>Check-in</a> to pay the drop-in fee via venmo</li>
-						<li>Show the coach the venmo transaction to be approved ✅</li>
-					</ul>
-				<li>Sessions start at Berkeley time (10 minutes after posted time)</li>
-				
+				<li>Training sessions prioritize <a href={% url 'membership' %}>Membership</a>
+				<li>Show up to the location listed at Berkeley time (10 minutes after posted time)</li>
 			</ol>
 		
 		</div>
 
 		<div class="col-xs-8 col-sm-7 col-lg-5 col-xl-4">
-			<a class="anchor" id="sessions"></a>
 			<h4><b>Sessions</b></h4>
 			{% if user.is_staff %}
-				<b><a href={% url 'add-session' %} class="btn btn-outline-success btn-sm" style="margin-bottom: 1rem;">Add Session</a></b><br/>
+				<b><a href={% url 'add-session' %} class="btn btn-outline-success btn-sm">Add Session</a></b><br/>
 			{% endif %}
 
 			{% if not all_sessions %}
@@ -114,41 +93,20 @@ $(document).ready(function(){
 			{% endif %}
 
 			<div>
+				<!-- Details Button -->
+				<a href="#{{session.get_id}}" class="btn btn-secondary btn-sm" data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="{{session.get_id}}">Details</a>&emsp;
 				{% if user in session.players.all or user in session.queue.all %}
-					<a href={% url 'drop' session.id %} class="btn btn-secondary btn-sm" style="margin-bottom: 1rem;" >
-						Drop
-					</a>&emsp;
-					{% if session.is_training%}
-						{% if not user.is_checked_in and not user.paid_drop_in_fee and not user.is_member %}
-							<a href={% url 'check-in' %} class="btn btn-secondary btn-sm" style="margin-bottom: 1rem" >
-								Check-In
-							</a>&emsp;
-						{% elif user.is_checked_in and not user.paid_drop_in_fee and not user.is_member %}
-							<a href={% url 'check-out' %} class="btn btn-secondary btn-sm" style="margin-bottom: 1rem">Check-Out</a>&emsp;
-							<a href="https://venmo.com/?txn=pay&audience=public&recipients=Hugo-Zhan&amount=3.00&note=Drop-In%20Training%20Fee" class="btn btn-primary btn-sm" style="margin-bottom: 1rem" >
-								<img src={% static "graphics/company_icons/venmo.svg" %} style="height: 1rem;">
-							</a>&emsp;
-							
-						{% endif %}
-					{% endif%}
-
-				{% elif session.is_available and already_queued and already_signed_up and not session.is_tournament %}
-					<small> 
-						&emsp;- You are already in two sessions; You must drop another session to sign-up for this session.<br/>
-					</small>
+					<!-- Drop Button -->
+					<a href={% url 'drop' session.id %} class="btn btn-secondary btn-sm">Drop</a>&emsp;
 				{% elif session.is_available and not session.is_cancelled %}
-					<a href={% url 'sign-up' session.id %} class="btn btn-secondary btn-sm" style="margin-bottom: 1rem;">
-						Sign-Up
-					</a>&emsp;
+					<!-- Sign-Up Button -->
+					<a href={% url 'sign-up' session.id %} class="btn btn-secondary btn-sm">Sign-Up</a>&emsp;
+				{% elif session.is_available and already_queued and already_signed_up and not session.is_tournament %}
+					<small>&emsp;- You are already in two sessions; You must drop another session to sign-up for this session.<br/></small>
 				{% else %}
 
 				{% endif %}
-
-				
 			
-				<a href="#{{session.get_id}}" class="btn btn-secondary btn-sm" style="margin-bottom: 1rem;" data-toggle="collapse"  role="button" aria-expanded="false" aria-controls="collapseExample">
-					Details
-				</a>
 				<div class="collapse" id="{{session.get_id}}">	
 					<ul>
 						<li>{{session.get_coaches}}</li>
@@ -157,6 +115,7 @@ $(document).ready(function(){
 						<li>{{session.get_remaining_slots}}</li>
 					</ul>
 				</div>
+
 				{% if session.note %}
 					<p>{{ session.note }}</p>
 				{% endif %}
@@ -165,19 +124,20 @@ $(document).ready(function(){
 			
 			<div>
 			{% if user.is_staff %}
-				<a href={% url 'edit-session' session.id %} class="btn btn-outline-info btn-sm" style="margin-bottom: 1rem;">Edit Session</a>
+				<a href={% url 'edit-session' session.id %} class="btn btn-outline-info btn-sm">Edit Session</a>
 				&emsp;
-				<a href={% url 'delete-session' session.id%} class="btn btn-outline-danger btn-sm" style="margin-bottom: 1rem;" onclick="return confirm('Are you sure?')">Delete Session</a>
+				<a href={% url 'delete-session' session.id%} class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure?')">Delete Session</a>
 				&emsp;
-				<a href={% url 'roster-by-rating' session.id%} class="btn btn-outline-warning btn-sm" style="margin-bottom: 1rem;" >Roster By Rating</a>
+				<a href={% url 'roster-by-rating' session.id%} class="btn btn-outline-warning btn-sm">Roster By Rating</a>
 			{% endif %}
 			</div>
-
-			<table class="table training-table" style="padding:0;">
+			{% if session.get_players %}
+			<table class="table table-sm">
+				
 				<thead>
 					<tr style="border-top: none;">
 						<th>Roster</th>
-						<th class="text-center" style="width:0.5rem;">Status</th>
+						<th class="text-center" style="width:0.5rem;">Member</th>
 					</tr>
 				</thead>
 				
@@ -190,8 +150,6 @@ $(document).ready(function(){
 						<td class="text-center" style="width:0.5rem;">
 							{% if player.is_member %}
 								🏓
-							{% elif player.paid_drop_in_fee %}
-								✅
 							{% endif %}
 						</td>
 					</tr>
@@ -211,8 +169,6 @@ $(document).ready(function(){
 							<td class="text-center" style="width:0.5rem;">
 								{% if player.is_member %}
 									🏓
-								{% elif player.paid_drop_in_fee %}
-									✅
 								{% endif %}
 							</td>
 						</tr>
@@ -233,8 +189,6 @@ $(document).ready(function(){
 								<td class="text-center" style="width:0.5rem;">
 									{% if player.is_member %}
 										🏓
-									{% elif player.paid_drop_in_fee %}
-										✅
 									{% endif %}
 								</td>
 							</tr>
@@ -242,6 +196,7 @@ $(document).ready(function(){
 					{% endif %}
 				</tbody>
 			</table>
+			{% endif %}
 			<br/>
 			{% endfor %}
 		</div>

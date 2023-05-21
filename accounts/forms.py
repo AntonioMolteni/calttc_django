@@ -17,7 +17,7 @@ class AccountChangeForm(UserChangeForm):
 		fields = ('rating', 'newsletter_subscription',)
 
 		widgets = {
-			'rating':forms.TextInput(attrs={'class':'form-control','style':'display:inherit; width:4rem;','type':'tel'}),
+			'rating':forms.TextInput(attrs={'class':'form-control rating','style':'display:inherit; width:4rem;','type':'tel'}),
 			'newsletter_subscription':forms.CheckboxInput(attrs={'class':'checkbox-control'}),
 		}
 

@@ -7,33 +7,6 @@
 			<h1><b>Manage Users</b></h1>
 		</div>
 
-		<!-- Drop-In Training Approval -->
-		<div class="col-md-6">
-			<a class="anchor" id="drop-in-approval"></a>
-			<h4>
-				<b>Drop-In Training Approval</b>
-			</h4>
-			<p>The approve and refuse buttons do not send an email to the user.</p>
-			{% if not checked_in_users %}
-				<p>No users requesting drop-in approval.</p>
-			{% else %}
-				<table class="table">
-					<tbody>
-					{% for user in checked_in_users %}
-						<tr style="padding: 0rem">
-							<td style="padding: 0.1rem; vertical-align: middle; font-size:.875rem;">{{ user.display_name }}</td>
-							<td style="padding:0.3rem; vertical-align: middle; text-align: right;" >
-								<a href={% url 'approve-drop-in' user.email %} class="btn btn-outline-success btn-sm">Approve</a>
-								&emsp;
-								<a href={% url 'refuse-drop-in' user.email %} class="btn btn-outline-danger btn-sm">Refuse</a><br/>
-							</td>
-						</tr>
-					{% endfor %}
-					</tbody>
-				</table>
-			{% endif %}
-		</div>
-
 		<!-- Membership Approval -->
 		<div class="col-md-6">
 			<a class="anchor" id="membership-approval"></a>
@@ -77,29 +50,17 @@
 	{% csrf_token %}
 	{{ formset.management_form }}
 	<div class="row">
-		<!-- Members & Approved Players-->
+		<!-- Members Players-->
 		<div class="col-md-5 col-lg-4">
-			<table class="table training-table" style="padding:0;">
+			<table class="table table-sm">
 				<thead>
 					<tr style="border-top: none;">
-						<th>Members & Approved Players</th>
-						<th class="text-center">Status</th>
+						<th>Members</th>
+						<th class="text-center">Member</th>
 					</tr>
 				</thead>
 				
 				<tbody>
-				{% for user in approved_users %}
-					<tr>
-						<td>
-							<img class="rounded-circle" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" style="height:1.5rem;"/>
-							&emsp;
-							{{ user.display_name }}</td>
-						<td class="text-center">
-							✅
-						</td>
-					</tr>
-				{% endfor %}
-
 				{% for member in members %}
 					<tr>
 						<td>
@@ -121,11 +82,11 @@
 		<!-- Do Not Touch This Template (Extremely Delicate) -->
 		<!-- All Users -->
 		<div class="col-md-7 col-lg-6" >
-			<table class="table training-table" style="padding:0;">
+			<table class="table table-sm">
 				<thead>
 					<tr style="border-top: none;">
 						<th>All Users</th>
-						<th class="text-center">Membership</th>
+						<th class="text-center">Member</th>
 						<th class="text-center">Newsletter</th>
 						<th class="text-center">Rating</th>
 					</tr>

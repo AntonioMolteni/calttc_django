@@ -26,7 +26,6 @@
 				<b>Members also receive perks such as:</b>
 				<ul>
 					<li>Access to cal table tennis merchandise</li>
-					<li>No drop-in fee for Training sessions</li>
 					<li>30% off all Joola product purchases</li>
 				</ul>
 			</h4>
@@ -34,56 +33,8 @@
 	</div>
 </div>
 
-
-
-
-<!-- Dues -->
-<a class="anchor" id="dues"></a>
-
-<div class="container-fluid padding">
-	<div class="row padding">
-		<div class="col-12">
-			<h1><b>Dues</b></h1>
-			<hr class="horizontalrule">
-			<h4>
-			The '22-'23 dues are listed below.
-			If you are ready to pay dues, follow the directions underneath <a href={% anchor 'membership' 'registration' %}>registration</a>.
-			</h4>
-		</div>
-		<div class="col-lg-6">
-			<h4>
-				<table class="table">
-
-					<thead>
-						<tr>
-							<th scope="col">Term</th>
-							<th scope="col">Cost</th>
-						</tr>
-					</thead>
-
-					<tbody>
-						<tr>
-							<td>Semester</td>
-							<td>$60</td>
-						</tr>
-					
-						<tr>
-							<td>Annual</td>
-							<td>$100</td>
-						</tr>
-					
-					</tbody>
-					
-				</table>
-			</h4>
-		</div>
-	</div>
-</div>
-
 <!-- Registration -->
-<a class="anchor" id="registration"></a>
-
-<div class="container-fluid padding">
+<div class="container-fluid padding" id="registration">
 	<div class="row padding">
 		<div class="col-12">
 			<h1><b>Registration</b></h1>
@@ -103,12 +54,26 @@
 					<li>
 						Sign-in to the cal rec sports website through either link below to pay dues.  This will add you the official RSF member list.
 						<ul>
-							<li><a href=https://shop.rs.berkeley.edu/Program/GetProgramDetails?courseId=8b4904eb-90e1-403f-8aa1-3a0be34e0ea9&semesterId=22972123-6987-40bb-a370-17de5a68e915 target="_blank" rel="noreferrer noopener">
-								Fall 2022 semester dues
-							</a></li>
-							<li><a href=https://shop.rs.berkeley.edu/Program/GetProgramDetails?courseId=692333be-ed54-4780-bb27-7cee2bc587ed&semesterId=22972123-6987-40bb-a370-17de5a68e915 target="_blank" rel="noreferrer noopener">
-								Annual dues
-							</a></li>
+						{% for dues_link in dues_links %}
+							{% if dues_link.link_url %}
+							<li>
+								{% if dues_link.link_url and dues_link.link_text%}
+									{% if dues_link.link_opens_in_new_tab %}
+										<a href="{{ dues_link.link_url }}" target="_blank" rel="noreferrer noopener">{{ dues_link.link_text }}</a>
+									{% else %}
+										<a href="{{ dues_link.link_url }}">{{ dues_link.link_text }}</a>
+									{% endif%}
+								{% elif dues_link.link_url%}
+									{% if dues_link.link_opens_in_new_tab %}
+										<a href="{{ dues_link.link_url }}" target="_blank" rel="noreferrer noopener">{{ dues_link.link_url }}</a>
+									{% else %}
+										<a href="{{ dues_link.link_url }}">{{ dues_link.link_url }}</a>
+									{% endif %}
+								{% endif %}
+							</li>
+							{% endif %}
+						{% endfor %}
+
 						</ul>
 					</li>
 					<li>
@@ -138,50 +103,31 @@
 		</div>
 	</div>
 </div>
-
-<!-- Drop-In Training-->
-<a class="anchor" id="drop-in-training"></a>
-
 <div class="container-fluid padding">
 	<div class="row padding">
 		<div class="col-12">
-			<h1><b>Drop-In Training</b></h1>
-			<hr class="horizontalrule">
-			<h4>
-				Looking to just come for one or two training sessions? Dropping in is your best option if you do not want to pay our club dues. 
-				For just a $3 drop-in fee, you can sign-up for one or two of our training sessions.  Start by checking out the 
-				<a href={% url 'schedule' %}>schedule</a> and 
-				<a href={% url 'sessions' %}>sessions</a> pages.
-			</h4>
-			<p>If you are a member, you do not need to pay the drop-in training fee.</p>
-			<h4>
-			 
-			</h4>
+			{% if user.is_staff %}
+			<b><a href={% url 'edit-dues-link' 1 %} class="btn btn-outline-info btn-md" style="margin-bottom: 1rem;">Edit Dues Link 1</a></b>
+			<b><a href={% url 'edit-dues-link' 2 %} class="btn btn-outline-info btn-md" style="margin-bottom: 1rem;">Edit Dues Link 2</a></b>
+			{% endif %}
 		</div>
 	</div>
 </div>
 
-<!-- Donations-->
-<a class="anchor" id="donations"></a>
 
-<div class="container-fluid padding">
+<!-- Donations -->
+<div class="container-fluid padding" id="donations">
 	<div class="row padding">
 		<div class="col-12">
 			<h1><b>Donations</b></h1>
 			<hr class="horizontalrule">
 			<h4>
-				Want to help support our club? Consider making a donation so that we can maintain the club!
-				Venmo our club president, Hugo Zhan, below:
+				Our club is funded by donations and membership dues. 
+				The best way to support the club is to buy a membership but if you are not a Cal student you can also support us by donating through the 
+				<a href="https://givingday.berkeley.edu/giving-day/60202/donate?dept=60796">Big Give</a>. Anything helps! 
 			</h4>
-			<a href="https://venmo.com/?txn=pay&audience=public&recipients=Hugo-Zhan&note=Donation" class="btn btn-primary btn-sm" style="margin-bottom: 1rem" >
-				<img src={% static "graphics/company_icons/venmo.svg" %} style="height: 1rem;">
-			</a>&emsp;
-			
 		</div>
 	</div>
 </div>
-
-
-
 
 {% endblock content %}

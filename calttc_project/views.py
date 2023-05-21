@@ -6,7 +6,9 @@ from django.conf import settings
 
  
 def home(request):
-    page_title = "Home"
+    # should just have "Cal Table Tennis" as Title for not 
+    # "Home | Cal Table Tennis" for search result optimization and
+    page_title = None
     if 'next' in request.GET:
         return redirect(request.GET.get('next'))
     else:    

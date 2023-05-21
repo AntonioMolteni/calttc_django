@@ -1,20 +1,14 @@
 /*-------------*/
 /*-- Webpage --*/
 /*-------------*/
-
-
 html,
 body {
   /* outside border of webpage */
   margin: 0;
-  padding-top: 2.6rem;
+  padding-top: 2.5rem;
   /* primary */
   font-family: sans-serif;
   background-color: #003262;
-}
-
-.table td, .table th  {
-  border-top: none; 
 }
 
 .row {
@@ -22,80 +16,63 @@ body {
   padding: 1rem 2rem 0rem 2rem;
   display:flex;
 }
+
+a:hover, a { 
+    text-decoration: none;
+    outline: none;
+}
+
 .emphasis {
   background-color: #e9ecef;
 }
 
+.btn {
+  margin-bottom: 0.5rem;
+}
+
+.horizontalrule {
+  background-color: #000;
+}
+.rating {
+  padding: 0 0 0 0.25rem;
+}
 
 @media (max-width: 1200px) {
   .row {
     padding: 1rem 0rem 0rem 0rem;
   }
-
 }
 
 /*------------*/
 /*-- Navbar --*/
 /*------------*/
 
-a.anchor {
-  display: block;
-  position: relative;
-  top: -5.6rem;
-}
-
 .navbar-brand>img {
   /* logo size/header height */
-  height: 4rem;
+  height: 3.5rem;
   width: auto;
-}
-
-.navbar-brand {
-  margin: 0 15px;
-}
-
-.navbar-toggler {
-  margin: 0 15px;
-}
-
-.navbar-nav {
-  margin-right:15px
-}
-
-.nav-item {
-  /* navigation bar kerning */
-  margin-left: 15px;
-
 }
 
 .nav-link {
   /* navigation bar font size (only use em) */
-  font-size: 1.4em;
+  font-size: 1.3em;
+  height: 3rem;
+  line-height: 2.2rem;
 }
 
-@media (min-width: 768px) {
-  .nav-item {
-  /* for centering of navlinks with images */
-  display:table;  
-  }
-  .nav-link {
-  /* For Vertical Centering with text and google profile picture (basically makes li element into a table cell that we can center things in */
-  vertical-align: middle;
-  display: table-cell;
-  }
-  .dropdown-toggle::after {
-    display:none;
-  }
+/* flips navbar carrots upside-down */
+.dropdown-toggle.show::after {
+  border-top: 0;
+  border-bottom: .3em solid;
 }
 
 .dropdown-menu {
   /* navigation bar dropdown title font size (only use em) */
-  font-size: 1.4em;
+  font-size: 1.3em;
   /* navigation bar dropdown color */
   background: #003262;
   border-color: transparent;
 }
-
 
 .dropdown-item {
   /* navigation bar dropdown item font size (only use em) */
@@ -103,7 +80,19 @@ a.anchor {
   color: #fff;
 }
 
-.navbar-dark .navbar-nav .show>.nav-link {
+.dropdown-item:focus, .dropdown-item:hover {
+  background-color:#fdb515
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  background-color:#fdb515
+}
+
+.dropdown-divider {
+  background-color: #fff;
+}
+
+.navbar-dark .navbar-nav .nav-link {
   outline: none;
 }
 
@@ -111,6 +100,13 @@ a.anchor {
   background-color: #003262;
   padding: 0.5rem 2rem;
 }
+
+/* navbar margin for anchor links to compensate for the height fo the navbar */
+/* navbar height is determined by navbar 'padding' and navbar brand 'height' */
+.container-fluid {
+  scroll-margin-top: 4.5rem 
+}
+
 /* badge on google profile picture */
 .corner-badged-item {
   position:relative;
@@ -126,6 +122,58 @@ a.anchor {
   .navbar {
     padding: 0.5rem 0;
   }
+}
+
+.account-image:hover {
+  filter: brightness(80%);
+}
+
+/*--------------------*/
+/*-- Navbar Toggler --*/
+/*--------------------*/
+/* Code that turns the hamburger menu item into an X */
+/* Sourced from: */
+/* https://gist.github.com/rickya4a/3d3b1f94c0f3c5fd1aeb */
+
+.icon-bar{
+  display:block;
+  width:22px;
+  height:2px;
+  border-radius:1px;
+  background-color: rgba(255,255,255,.55);
+}
+.icon-bar+.icon-bar{margin-top:4px}
+
+.navbar-toggler {
+  border: none;
+  background: transparent !important;
+}
+.navbar-toggler:hover {
+  background: transparent !important;
+}
+.navbar-toggler .icon-bar {
+  width: 22px;
+  transition: all 0.2s;
+}
+.navbar-toggler .top-bar {
+  transform: rotate(45deg);
+  transform-origin: 10% 10%;
+}
+.navbar-toggler .middle-bar {
+  opacity: 0;
+}
+.navbar-toggler .bottom-bar {
+  transform: rotate(-45deg);
+  transform-origin: 10% 90%;
+}
+.navbar-toggler.collapsed .top-bar {
+  transform: rotate(0);
+}
+.navbar-toggler.collapsed .middle-bar {
+  opacity: 1;
+}
+.navbar-toggler.collapsed .bottom-bar {
+  transform: rotate(0);
 }
 
 /*---------------------*/
@@ -170,8 +218,6 @@ a.anchor {
   filter: drop-shadow(2px 1px 0px #fff)
 }
 
-
-
 .carousel-caption {
   /* banner placement */
   position: absolute;
@@ -186,8 +232,6 @@ a.anchor {
 /*--------------*/
 /*-- About Us --*/
 /*--------------*/
-
-
 .paddle {
   margin-bottom: 1rem;
   height: 10rem;
@@ -226,42 +270,61 @@ a.anchor {
   padding: 1.25rem 0;
 }
 
-/*--------------*/
-/*-- Sessions --*/
-/*--------------*/
-.training-table td, .training-table th  {
-  border-top: none; 
-  padding: 0;
-}
-
 /*-----------*/
 /*-- Footer --*/
 /*-----------*/
 
-.horizontalrule {
-  background-color: #000;
+
+.contact:hover,
+.figure:hover img {
+  filter: brightness(80%);
 }
+.open-play-hours {
+  color: inherit;
+}
+
+.open-play-hours:hover,
+.figure:hover b {
+  color: #6c757d;
+}
+
 .contact {
-  padding: 0rem .20rem;
+  margin: 0rem .20rem;
 }
 
 @media (min-width: 375px) {
   .contact {
-    padding: 0rem .45rem;
+    margin: 0rem .45rem;
   }
 }
 
 @media (min-width: 768px) {
   .contact {
-    padding: 0rem 1.9rem;
+    margin: 0rem 1.9rem;
   }
 }
 
 @media (min-width: 992px) {
   .contact {
-    padding: 0rem 1.25rem;
+    margin: 0rem 1.25rem;
   }
 }
+
+/* Add to Home Screen for App Mode Note */
+/* https://www.bennadel.com/blog/1950-detecting-iphones-app-mode-full-screen-mode-for-web-applications.htm */
+
+#appModeNote {
+  background-color: #003262 ;
+  bottom: 0px ;
+  color: rgba(255,255,255,.55);
+  display: none ;
+  left: 0px ;
+  padding: 10px 0px 10px 0px ;
+  position: fixed ;
+  text-align: center ;
+  width: 100% ;
+  }
+
 
 /*------------------*/
 /*-- Manage Users --*/
@@ -271,17 +334,6 @@ input.readonly {
   opacity : .50;
   cursor  : default;
 }
-
-/*-----------*/
-/*-- Extra --*/
-/*-----------*/
-
-/*-- Media Queries --*/
-@media (max-width: 992px) {}
-
-@media (max-width: 768px) {}
-
-@media (max-width: 576px) {}
 
 /*-- Dark Mode --*/
 @media (prefers-color-scheme: dark) {
@@ -308,47 +360,7 @@ input.readonly {
   .horizontalrule {
     background-color: #fff;
   }
-  /* Google Calendar Embed Dark Mode */
-  iframe{
-    color-scheme: dark;
-  } 
-}
 
-/*--- Bootstrap 5 Column Division ---*/
-.col-xs-15,
-.col-sm-15,
-.col-md-15,
-.col-lg-15 {
-  position: relative;
-  min-height: 1px;
-  padding-right: 10px;
-  padding-left: 10px;
-}
-
-.col-xs-15 {
-  max-width: 20%;
-  float: left;
-}
-
-@media (min-width: 768px) {
-  .col-sm-15 {
-    max-width: 20%;
-    float: left;
-  }
-}
-
-@media (min-width: 992px) {
-  .col-md-15 {
-    max-width: 20%;
-    float: left;
-  }
-}
-
-@media (min-width: 1200px) {
-  .col-lg-15 {
-    max-width: 20%;
-    float: left;
-  }
 }
 
 /*

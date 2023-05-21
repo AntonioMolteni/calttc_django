@@ -12,7 +12,5 @@ urlpatterns = [
   path("drop/<session_id>", views.drop, name="drop"),
   path("sign_up/<session_id>", views.sign_up, name="sign-up"),
 
-  path("check_in",views.check_in, name="check-in"),
-  path("check_out",views.check_out, name="check-out"),
   
 ]

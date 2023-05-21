@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from accounts.models import User
 from django.core.mail import send_mail
+from .forms import EditDuesLinkForm
+from .models import DuesLink
 
 from announcements.models import Announcement
 
@@ -14,19 +16,31 @@ president_email = "23zhankanghong@berkeley.edu"
 def membership(request):
   page_title = 'Membership'
   announcements = Announcement.objects.filter(on_membership_page=True)
-
-  # Remove past drop in status
-  for user in User.objects.filter(paid_drop_in_fee = True).exclude(last_drop_in_date = None):
-      if datetime.now() > user.last_drop_in_date + timedelta(days=1):
-          user.paid_drop_in_fee = False
-          user.save()
+  dues_links = DuesLink.objects.all()
 
   return render(request, "membership.html",
     {
       'page_title': page_title,
       'announcements': announcements,
+      'dues_links': dues_links
     }
   )
+
+@login_required
+@staff_member_required
+def edit_dues_link(request, dues_link_id):
+    page_title = "Edit Dues Link"
+    dues_link= DuesLink.objects.get(pk=dues_link_id)
+    form = EditDuesLinkForm(request.POST or None, instance=dues_link)
+    if form.is_valid():
+        form.save()
+        return redirect('membership')
+    return render(request, 'membership/edit_dues_link.html',
+        {
+            'page_title': page_title,
+            'dues_link': dues_link,
+            'form': form
+            })
 
 
 @login_required
@@ -40,26 +54,6 @@ def unregister(request):
 	request.user.is_registered = False
 	request.user.save()
 	return redirect(reverse('membership') + '#registration')
-
-# Accounts Page Staff User Approval
-@login_required
-@staff_member_required
-def approve_drop_in(request, user_email):
-  specified_user = User.objects.get(email=user_email)
-  specified_user.is_checked_in = False
-  specified_user.paid_drop_in_fee = True
-  specified_user.last_drop_in_date = datetime.now()
-  specified_user.save()
-  return redirect(reverse('manage-users') + '#drop-in-approval')
-
-@login_required
-@staff_member_required
-def refuse_drop_in(request, user_email):
-  specified_user = User.objects.get(email=user_email)
-  specified_user.is_checked_in = False
-  specified_user.has_paid = False
-  specified_user.save()
-  return redirect(reverse('manage-users') + '#drop-in-approval')
 
 @login_required
 @staff_member_required

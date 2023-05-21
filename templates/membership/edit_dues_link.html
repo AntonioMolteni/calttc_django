@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="container-fluid padding">
+	<form action="" method=POST>
+		<div class="row">
+			<div class="col-12">
+				<h1><b>Edit Dues Link {{ form.instance.id }}</b></h1>
+				{% csrf_token %}
+
+					<b>{{ form.link_text.label }}:</b>
+					{{ form.link_text }}
+					<b style="color:#FF0000">{{ form.link_text.errors }}</b>
+
+					<b>{{ form.link_url.label }}:</b>
+					{{ form.link_url }}
+					<b style="color:#FF0000">{{ form.link_url.errors }}</b>
+
+					<b>{{ form.link_opens_in_new_tab.label }}:</b>
+					{{ form.link_opens_in_new_tab }}
+					<b style="color:#FF0000">{{ form.link_opens_in_new_tab.errors }}</b><br/>
+					
+					<input type="submit" value="Save" class="btn btn-outline-info btn-lg">
+
+			</div>
+		</div>
+	</form>
+
+</div>
+
+{% endblock content %}

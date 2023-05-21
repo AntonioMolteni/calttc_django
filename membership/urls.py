@@ -3,8 +3,7 @@ from . import views
 
 urlpatterns = [
 	path("", views.membership, name="membership"),
-  path("approve_drop_in/<user_email>", views.approve_drop_in, name="approve-drop-in"),
-  path("refuse_drop_in/<user_email>", views.refuse_drop_in, name="refuse-drop-in"),
+	path("edit_dues_link/<dues_link_id>", views.edit_dues_link, name="edit-dues-link"),
 
   path("register", views.register, name="register"),
   path("unregister", views.unregister, name="unregister"),

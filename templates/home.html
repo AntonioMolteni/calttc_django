@@ -6,11 +6,19 @@
 
 {% block content %}
 
-<div id="carouselControls" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-
+<div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel">
+	<div class="carousel-indicators">
+		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6" aria-label="Slide 7"></button>
+	</div>
+	<div class="carousel-inner">
 		<div class="carousel-item active">
-      <img class="d-block w-100" src="{% get_media_prefix %}{{ primary_carousel_image.image }}">
+			<img class="d-block w-100" src="{% get_media_prefix %}{{ primary_carousel_image.image }}">
 			<div class="carousel-caption">
 				<img src={% static "graphics/logos/logo_banner.png" %}>
 			</div>
@@ -21,18 +29,17 @@
 			<img class="d-block w-100" src="{% get_media_prefix %}{{ carousel_image.image }}">
 		</div>
 		{% endfor %}
+	</div>
+	<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+	<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	</button>
 
-  </div>
-  <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
 </div>
-
 
 <!--- Announcements -->
 {% if home_announcements %}
@@ -44,26 +51,24 @@
 					<h3><b>{{ announcement.title }}</b></h3>
 				{% endif %}
 				{% if announcement.content or announcement.link_url %}
-				<p>
+				<h5>
 					{% if announcement.content %}
-						{{ announcement.content }}
+						{{ announcement.content }}<br/>
 					{% endif %}
 					{% if announcement.link_url and announcement.link_text%}
-						<br/>
 						{% if announcement.link_opens_in_new_tab %}
 							<a href="{{ announcement.link_url }}" target="_blank" rel="noreferrer noopener">{{ announcement.link_text }}</a>
 						{% else %}
 							<a href="{{ announcement.link_url }}">{{ announcement.link_text }}</a>
 						{% endif%}
 					{% elif announcement.link_url%}
-						<br/>
 						{% if announcement.link_opens_in_new_tab %}
 							<a href="{{ announcement.link_url }}" target="_blank" rel="noreferrer noopener">{{ announcement.link_url }}</a>
 						{% else %}
 							<a href="{{ announcement.link_url }}">{{ announcement.link_url }}</a>
 						{% endif %}
 					{% endif %}
-				</p>
+				</h5>
 				{% endif %}
 			{% endfor %}
 		</div>
@@ -111,19 +116,13 @@
 
 	</div>
 	
-</div>
-	
-
-<!--- How to Get Started -->
-<div class="container-fluid padding">
+	<!--- How to Get Started -->
 	<div class="row">
 		<div class="col-12">
 			<h1><b>How to Get Started</b></h1>
 			<ol class="myUL">
 				<li>
-					Attend <a href={% anchor 'schedule' 'open-play' %}>Open Play</a>
-					or attend one of our 
-					<a href={% anchor 'membership' 'drop-in-training' %}>Drop-in Training</a> 
+					Attend one of our <a href={% anchor 'schedule' 'open-play' %}>Open Play</a>
 					sessions to see if the club is right for you
 				</li>
 				<li>
@@ -133,11 +132,9 @@
 			</ol>
 		</div>
 	</div>
-</div>
 
 
-<!--- Perks -->
-<div class="container-fluid padding">
+	<!--- Perks -->
 	<div class="row text-left padding">
 		<div class="col-xs-12 col-sm-6 col-xl-3">
 			<h4><b>
@@ -146,7 +143,8 @@
 				Pro Coaches
 			</b></h4>
 			<p> Receive coaching from Competitive Team players, former top-ranked
-				U.S. players and National Team players.</p>
+				U.S. players and National Team players. 
+				If you are interested in becoming a coach, reach out to become a club officer.</p>
 		</div>
 
 		<div class="col-xs-12 col-sm-6 col-xl-3">
@@ -155,16 +153,17 @@
 				<i class="fas fa-user-group"></i>
 				Social Events
 			</b></h4>
-			<p>Biweekly social events, banquets, retreats and more!</p>
+			<p>Our Social Team is very active and hosts many events throughout the semester including banquets, retreats and other recreational activities!</p>
 		</div>
 
 		<div class="col-xs-12 col-sm-6 col-xl-3">
 			<h4><b>
 				<!-- Fontawesome Icon -->
 				<i class="fas fa-money-bill-1"></i>
-				Exclusive Offers
+				Club Benefits
 			</b></h4>
-			<P>In generous partnership with Joola, all CalTTC members receive 30% off all Joola products purchases.</p>
+			<P>Our club provides many ammenities like competition grade tables as well as multi-ball training. 
+				In a generous partnership with Joola, all club members receive 30% off all Joola products purchases through an order form.</p>
 		</div>
 
 		<div class="col-xs-12 col-sm-6 col-xl-3">
@@ -173,16 +172,12 @@
 				<i class="fas fa-medal"></i>
 				Represent Cal
 			</b></h4>
-			<P>Be proud to represent Cal in NCTTA Regional and National Championships!</p>
+			<p>Interested in playing competitively? 
+				Lookout for walk-on tryouts in the Fall Semester and be proud to represent Cal in NCTTA Regional and National Championships!</p>
 		</div>
 	</div>
-</div>
 
-
-{% if not user.is_staff%}
-
-{% else %}
-<div class="container-fluid padding">
+	{% if user.is_staff %}
 	<div class="row">
 		<div class="col-md-12 col-lg-6">
 			<!-- Banner Announcements -->
@@ -195,17 +190,15 @@
 				{% if announcement.content or announcement.link_url %}
 				<p>
 					{% if announcement.content %}
-						{{ announcement.content }}
+						{{ announcement.content }}<br/>
 					{% endif %}
 					{% if announcement.link_url and announcement.link_text%}
-						<br/>
 						{% if announcement.link_opens_in_new_tab %}
 							<a href="{{ announcement.link_url }}" target="_blank" rel="noreferrer noopener">{{ announcement.link_text }}</a>
 						{% else %}
 							<a href="{{ announcement.link_url }}">{{ announcement.link_text }}</a>
 						{% endif%}
 					{% elif announcement.link_url%}
-						<br/>
 						{% if announcement.link_opens_in_new_tab %}
 							<a href="{{ announcement.link_url }}" target="_blank" rel="noreferrer noopener">{{ announcement.link_url }}</a>
 						{% else %}
@@ -232,15 +225,18 @@
 		<div class="col-sm-5 col-md-6 col-lg-3">
 			<h4><b>Newsletter</b></h4>
 			<b><a href={% url 'compose-newsletter' %} class="btn btn-outline-success btn-sm" style="margin-bottom: 1rem;">Compose Newsletter</a></b>
+			<b><a href={% url 'export-newsletter-csv' %} class="btn btn-outline-success btn-sm" style="margin-bottom: 1rem;">Export Newsletter CSV</a></b>
 		</div>
 
-		
-
-
-
-
 	</div>
+	{% endif %}
+
+<!-- This note is hidden by default; but, if the device can
+handle full screen app mode and is NOT using it, this
+note will be shown. -->
+<div id="appModeNote">
+	<h1>Go Full Screen!</h1>
+	<span>Use the "Add to Home Screen" Feature</span>
 </div>
-{% endif %}
 
 {% endblock content %}

@@ -8,4 +8,5 @@ urlpatterns = [
   path("unsubscribe", views.unsubscribe, name="unsubscribe"),
   path("unsubscribe_external", views.unsubscribe_external, name="unsubscribe-external"),
   path("subscribe_external", views.subscribe_external, name="subscribe-external"),
+  path("export_newsletter_csv", views.export_newsletter_csv, name="export-newsletter-csv"),
 ]

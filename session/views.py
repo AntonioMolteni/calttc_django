@@ -32,12 +32,11 @@ def sessions(request):
     page_title = 'Sessions'
     refresh_queries()
     already_signed_up, already_queued = has_signed_up(request)[0], has_signed_up(request)[1]
-    open_venmo = request.GET.get('open_venmo')
     # Update roster
     for session in all_sessions:
         if session.get_queue() and datetime.now() >= session.time - timedelta(minutes=cutoff):
             extra_space = max(0,session.capacity - session.players.count())
-            for user in session.queue.order_by('-is_member', '-paid_drop_in_fee', '-has_berkeley_email', 'sign_up_date',)[:extra_space].all():
+            for user in session.queue.order_by('-is_member', '-has_berkeley_email', 'sign_up_date',)[:extra_space].all():
                 user_signed_up = False
                 for s in all_available_sessions:
                     if s.players.contains(user):
@@ -47,18 +46,11 @@ def sessions(request):
                     session.queue.remove(user)
                     already_queued = False
     
-    # Remove past drop in status
-    for user in User.objects.filter(paid_drop_in_fee = True).exclude(last_drop_in_date = None):
-        if datetime.now() > user.last_drop_in_date + timedelta(days=1):
-            user.paid_drop_in_fee = False
-            user.save()
-    
     announcements = Announcement.objects.filter(on_sessions_page=True)       
     
     return render(request, 'sessions.html',
         {
         'page_title': page_title,
-        'open_venmo': open_venmo,
         'cutoff': cutoff,
         'all_sessions': all_sessions,
         'already_signed_up': already_signed_up,
@@ -110,7 +102,7 @@ def delete_session(request, session_id):
 def roster_by_rating(request, session_id):
     session = Session.objects.get(pk=session_id)
     players = session.players.order_by('-rating')
-    UserFormSet = modelformset_factory(User, fields=('rating',), widgets={"rating": TextInput(attrs={'class':'form-control','type':'tel'},)}, extra=0)
+    UserFormSet = modelformset_factory(User, fields=('rating',), widgets={"rating": TextInput(attrs={'class':'form-control rating','type':'tel'},)}, extra=0)
     if request.method == "POST":
         formset = UserFormSet(
             request.POST, request.FILES,
@@ -154,17 +146,3 @@ def sign_up(request, session_id):
         
     return redirect(reverse('sessions')+'#'+session.get_id())
 
-@login_required
-def check_in(request):
-  if not request.user.is_member:
-    request.user.is_checked_in = True
-    request.user.save()
-    return redirect(reverse('sessions') + '?open_venmo=True' + '#sign-up')
-  else:
-    return redirect(reverse('sessions') + '#sign-up')
-
-@login_required
-def check_out(request):
-	request.user.is_checked_in = False
-	request.user.save()
-	return redirect(reverse('sessions') + '#sign-up')

@@ -7,10 +7,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .models import User
 from django.forms import CheckboxInput, TextInput, modelformset_factory
 from accounts.forms import AccountChangeForm
-from team.models import Profile
 from team.forms import ProfileForm
-
-from django.shortcuts import get_object_or_404
 
 
 def login(request):
@@ -67,17 +64,10 @@ def privacy_policy(request):
 @staff_member_required
 def manage_users(request):
     page_title = 'Manage Users'
-    # Remove past drop in status
-    for user in User.objects.filter(paid_drop_in_fee = True).exclude(last_drop_in_date = None):
-        if datetime.now() > user.last_drop_in_date + timedelta(days=1):
-            user.paid_drop_in_fee = False
-            user.save()
 
     # Queries
     registered_users = User.objects.filter(is_registered = True)
-    checked_in_users = User.objects.filter(is_checked_in = True)
     members = User.objects.filter(is_member = True)
-    approved_users = User.objects.filter(paid_drop_in_fee = True)
     users = User.objects.all()
     
 
@@ -85,7 +75,7 @@ def manage_users(request):
     widgets={
         "is_member": CheckboxInput(attrs={'class':'checkbox-control', 'tabindex':'-1'},),
         "newsletter_subscription": CheckboxInput(attrs={'class':'checkbox-control', 'tabindex':'-1'},),
-        "rating": TextInput(attrs={'class':'form-control','type':'tel'},),
+        "rating": TextInput(attrs={'class':'form-control rating','type':'tel'},),
         }
     if not request.user.is_admin:
         widgets['is_member']= CheckboxInput(attrs={'class':'checkbox-control readonly', 'tabindex':'-1'},)
@@ -114,9 +104,7 @@ def manage_users(request):
     return render(request, "accounts/manage_users.html",
     { 
         'page_title': page_title,
-        'checked_in_users': checked_in_users,
         'registered_users': registered_users,
         'members': members,
-        'approved_users': approved_users,
         'formset': formset}
     )
