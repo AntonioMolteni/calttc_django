@@ -64,8 +64,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 	date_joined = models.DateTimeField(auto_now_add=True)
 	sign_up_date = models.DateTimeField(null=True, blank=True)
 
-	newsletter_subscription = models.BooleanField(default=False)
-
 	class Meta:
 		ordering = ['first_name']
 

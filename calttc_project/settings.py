@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'images',
     'announcements',
     'membership',
-    'newsletter',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

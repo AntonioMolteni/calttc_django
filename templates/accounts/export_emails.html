@@ -1,0 +1,25 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="container-fluid padding">
+	<form method="post" action="" enctype="multipart/form-data">
+		<div class="row">
+			<div class="col-12">
+				<h1><b>Export Emails CSV</b></h1>
+			</div>
+
+			<div class="col-12">
+				{% csrf_token %}
+
+				<b>{{ form.recipients.label }}:</b>
+				{{ form.recipients }}
+				<b style="color:#FF0000">{{ form.recipients.errors }}</b>
+				
+				<br/><input type="submit" value="Download CSV" class="btn btn-outline-success btn-lg" style="margin-bottom: 1rem;">
+			</div>
+
+		</div>
+	</form>
+</div>
+
+{% endblock content %}

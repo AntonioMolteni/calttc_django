@@ -14,12 +14,20 @@ class AccountChangeForm(UserChangeForm):
 
 	class Meta:
 		model = User
-		fields = ('rating', 'newsletter_subscription',)
+		fields = ('rating',)
 
 		widgets = {
 			'rating':forms.TextInput(attrs={'class':'form-control rating','style':'display:inherit; width:4rem;','type':'tel'}),
-			'newsletter_subscription':forms.CheckboxInput(attrs={'class':'checkbox-control'}),
 		}
 
+
+ExportChoices = (
+  ('U','Users'),
+  ('M','Members'),
+)
+		
+class ExportEmailCSVForm(forms.Form):
+	recipients = forms.ChoiceField(label='Recipients', choices=ExportChoices, widget=forms.Select(attrs={'class':'form-control'}))
+ 
 
 

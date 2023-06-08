@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 from django.contrib.auth import logout as auth_logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -8,6 +7,9 @@ from .models import User
 from django.forms import CheckboxInput, TextInput, modelformset_factory
 from accounts.forms import AccountChangeForm
 from team.forms import ProfileForm
+from .forms import ExportEmailCSVForm
+import csv
+from django.http import HttpResponse
 
 
 def login(request):
@@ -74,14 +76,12 @@ def manage_users(request):
     # Formset for multiple forms
     widgets={
         "is_member": CheckboxInput(attrs={'class':'checkbox-control', 'tabindex':'-1'},),
-        "newsletter_subscription": CheckboxInput(attrs={'class':'checkbox-control', 'tabindex':'-1'},),
         "rating": TextInput(attrs={'class':'form-control rating','type':'tel'},),
         }
     if not request.user.is_admin:
         widgets['is_member']= CheckboxInput(attrs={'class':'checkbox-control readonly', 'tabindex':'-1'},)
-        widgets['newsletter_subscription']= CheckboxInput(attrs={'class':'readonly', 'tabindex':'-1',},)
    
-    ManageUsersFormSet = modelformset_factory(User, fields=('is_member','newsletter_subscription','rating'),
+    ManageUsersFormSet = modelformset_factory(User, fields=('is_member','rating'),
         extra = 0, widgets=widgets
         )
 
@@ -108,3 +108,54 @@ def manage_users(request):
         'members': members,
         'formset': formset}
     )
+
+
+
+@login_required
+@staff_member_required
+def export_email_csv(request): 
+    page_title = 'Export Email CSV'
+    if request.method == 'POST':
+        form = ExportEmailCSVForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data['recipients'] == 'U':
+                recipients = User.objects.all().filter(is_active=True)
+            elif form.cleaned_data['recipients'] == 'M':
+                recipients = User.objects.all().filter(is_active=True).filter(is_member = True)
+            else:
+                recipients = None
+ 
+            field = form.fields['recipients']
+            data = form.cleaned_data['recipients'] 
+            if isinstance(data, (list, tuple)): 
+                # for multi-selects 
+                friendly_name = [x[1] for x in field.choices if x[0] in data] 
+            else: 
+                friendly_name = [x[1] for x in field.choices if x[0] == data] 
+
+            response = HttpResponse(
+                content_type='text/csv',
+				headers={'Content-Disposition': f'attachment; filename="{friendly_name[0]}_emails.csv"'}
+				)
+            writer = csv.writer(response)
+            writer.writerow(['Name',	'Given Name',	'Additional Name',	'Family Name',	'Yomi Name',	'Given Name Yomi',	'Additional Name Yomi',	'Family Name Yomi',	'Name Prefix',	'Name Suffix',	'Initials',	'Nickname',	'Short Name',	'Maiden Name',	'Birthday',	'Gender',	'Location',	'Billing Information', 'Directory Server',	'Mileage',	'Occupation',	'Hobby',	'Sensitivity', 'Priority',	'Subject',	'Notes',	'Language',	'Photo',	'Group Membership','E-mail 1 - Type',	'E-mail 1 - Value',	'E-mail 2 - Type',	'E-mail 2 - Value'])
+            for recipient in recipients:
+                user_list = []
+                user_list.append(recipient.display_name())
+                user_list.append(recipient.first_name)
+                user_list.append('')
+                user_list.append(recipient.last_name)
+                for i in range(24):
+                    user_list.append('')
+                user_list.append('Newsletter ::: * myContacts')
+                user_list.append('* Other')
+                user_list.append(recipient.email)
+                writer.writerow(user_list)
+            return response
+    else:
+        form = ExportEmailCSVForm()
+
+    return render(request, 'accounts/export_emails.html', 
+        { 'page_title': page_title,
+            'form': form
+            })

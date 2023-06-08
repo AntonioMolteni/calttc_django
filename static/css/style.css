@@ -98,7 +98,7 @@ a:hover, a {
 
 .navbar {
   background-color: #003262;
-  padding: 0.5rem 2rem;
+  padding: 0.6rem 2rem;
 }
 
 /* navbar margin for anchor links to compensate for the height fo the navbar */
@@ -294,19 +294,19 @@ a:hover, a {
 
 @media (min-width: 375px) {
   .contact {
-    margin: 0rem .45rem;
+    margin: 0rem .5rem;
   }
 }
 
 @media (min-width: 768px) {
   .contact {
-    margin: 0rem 1.9rem;
+    margin: 0rem 0.5rem;
   }
 }
 
 @media (min-width: 992px) {
   .contact {
-    margin: 0rem 1.25rem;
+    margin: 0rem .40rem;
   }
 }
 

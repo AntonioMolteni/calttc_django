@@ -87,7 +87,6 @@
 					<tr style="border-top: none;">
 						<th>All Users</th>
 						<th class="text-center">Member</th>
-						<th class="text-center">Newsletter</th>
 						<th class="text-center">Rating</th>
 					</tr>
 				</thead>
@@ -98,14 +97,10 @@
 						<td>
 							{{ form.instance.display_name }}
 							<b style="color:#FF0000">{{ form.is_member.errors }}</b>
-							<b style="color:#FF0000">{{ form.newsletter_subscription.errors }}</b>
 							<b style="color:#FF0000">{{ form.rating.errors }}</b>
 						</td>
 						<td class="text-center">
 							{{ form.is_member }}
-						</td>
-						<td class="text-center">
-							{{ form.newsletter_subscription }}
 						</td>
 						<td class="text-center" style="width:4rem;">
 							{{ form.rating }}

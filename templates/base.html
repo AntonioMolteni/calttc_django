@@ -12,9 +12,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<!-- Title of the webpage that appears on tabs.-->
-	<!-- "{% content %}" & "{{ content }}" are functions and variables from page context respectively -->
-	<!-- which can be found in the python dictionary from the 'view' for this base.html 'template' -->
-	<!-- This particular example refers to page title which can be assigned for each page individually in each page 'view'. -->
 	<title>
 		{% if page_title %}
 			{{ page_title }} | 
@@ -93,19 +90,11 @@
 	<!-- If the stylesheet is updated and causing browser issues, it is because you need to -->
 	<!-- update the version number below(1.0 becomes 1.1 etc.). This will force the browser -->
 	<!-- to reset its cache by reloading the style.css file. -->
-	<link rel="stylesheet" type="text/css" href= "{% static "css/style.css" %}?v=6.9">
+	<link rel="stylesheet" type="text/css" href= "{% static "css/style.css" %}?v=7.1">
 
 </head>
 
 <body>
-<!-- Unsubscribe verification pop-up -->
-{% if unsubscribe_verification %}
-	<body onload="return confirm('{{ request.user.email }} has been successfully unsubscribed from the newsletter')"></body>
-{% endif %}
-{% if subscribe_verification %}
-	<body onload="return confirm('{{ request.user.email }} has been successfully subscribed to the newsletter')"></body>
-{% endif %}
-
 <!-- Navigation -->
 <nav class="navbar navbar-expand-md navbar-dark fixed-top">
 	<div class="container-fluid">
@@ -302,7 +291,7 @@
 			</div>
 
 			<!-- Open Play Hours -->
-			<div class="col-md-6 col-lg-3 order-lg-1 ">
+			<div class="col-md-6 col-lg-4 order-lg-1 ">
 				<br/>
 				<h4><b>Open Play Hours</b></h4>
 				<a class="open-play-hours" href={% anchor 'schedule' 'open-play' %}>
@@ -314,20 +303,8 @@
 				</a>
 			</div>
 			
-			<a class="anchor" id="newsletter" style="display:none;"></a>
-			<!-- Email Newsletter -->
-			<div class="col-md-6 col-lg-3 order-lg-3" >
-				<br/>
-				<h4><b>Email Newsletter</b></h4>
-				{% if user.newsletter_subscription %}
-					<a href="{% url 'unsubscribe' %}?next={{request.path}}" class="btn btn-secondary btn-lg center">Unsubscribe</a>
-				{% else %}
-					<a href="{% url 'subscribe' %}?next={{request.path}}" class="btn btn-secondary btn-lg center">Subscribe</a>
-				{% endif %}
-			</div>
-
 			<!-- Contact Us -->
-			<div class="col-md-12 col-lg-6 order-lg-2">
+			<div class="col-md-6 col-lg-4 order-lg-3">
 				<br/>
 				<h4><b>Contact Us</b></h4>
 				
@@ -362,9 +339,10 @@
 
 			
 			<!-- Graphics Table Locations & OCF -->
-			<div class="col-12 order-5"
+			<div class="col-md-12 col-lg-4 order-lg-2">
+				<br/>
 				<div class="container d-flex" style="display:flex; align-items:top; justify-content: center">
-					
+				
 					<!-- Graphics -->
 					<a class="figure" href={% url 'graphics' %} style="color: inherit; text-decoration: inherit;">
 						<figure>
@@ -376,7 +354,7 @@
 					&emsp;
 
 					<!-- Table Locations -->
-					<a class="figure" href="https://www.google.com/maps/d/viewer?mid=111dwi-_btwt0nSpODW-dqJ5cJxehN5k&usp=sharing" target="_blank" rel="noreferrer noopener" style="color: inherit; text-decoration: inherit;">
+					<a class="figure" href={% url 'table-locations' %} style="color: inherit; text-decoration: inherit;">
 						<figure>
 							<img src={% static "graphics/assets/ping_pong_table.svg" %} 
 							style="height:3.3rem;">

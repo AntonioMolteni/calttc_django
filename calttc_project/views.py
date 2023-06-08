@@ -3,6 +3,11 @@ from announcements.models import Announcement
 from images.models import CarouselImage
 import os
 from django.conf import settings
+from django.http import HttpResponse
+import shutil
+from django.views.decorators.csrf import csrf_exempt
+import time
+
 
  
 def home(request):
@@ -61,7 +66,6 @@ def graphics(request):
     assets_raw = os.listdir(os.path.join(STATIC_ROOT, "graphics/assets"))
     assets_raw.sort()
     assets = filter(not_a_file, assets_raw)
-
     
     return render(request, "graphics.html",
         {
@@ -74,3 +78,51 @@ def graphics(request):
         'assets': assets,
         }
     )
+# https://stackoverflow.com/questions/1855095/how-to-create-a-zip-archive-of-a-directory
+@csrf_exempt
+def all_graphics(request):
+    if settings.PRODUCTION:
+        STATIC_ROOT = settings.STATIC_ROOT
+    else:
+        STATIC_ROOT = os.path.join(settings.BASE_DIR, 'static')
+
+    # Path to the directory you want to compress
+    dir_name = os.path.join(STATIC_ROOT, 'graphics')
+    print("dir_name")
+    print(dir_name)
+
+    # Output filename and path
+    output_filename = os.path.join(STATIC_ROOT, 'all_graphics')
+    print("output_filename")
+    print(output_filename)
+
+    # Create the ZIP archive using shutil.make_archive
+    shutil.make_archive(output_filename, 'zip', dir_name)
+
+    output_filename += '.zip'
+
+    # Open the ZIP archive in binary mode
+    with open(output_filename, 'rb') as zip_file:
+        # Create a response object with the ZIP file
+        response = HttpResponse(zip_file.read(), content_type='application/zip')
+
+        # Set the appropriate headers for file download
+        response['Content-Disposition'] = 'attachment; filename="all_graphics.zip"'
+
+    # Return the response object
+    os.remove(output_filename)
+    return response
+
+
+
+
+def table_locations(request):
+    page_title = "Table Locations"
+    if 'next' in request.GET:
+        return redirect(request.GET.get('next'))
+    else:    
+        return render(request, "table_locations.html",
+            {
+            'page_title': page_title,
+            }
+        )

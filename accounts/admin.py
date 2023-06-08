@@ -9,11 +9,11 @@ class AccountUserAdmin(UserAdmin):
     add_form = AccountCreationForm
     form = AccountChangeForm
     model = User
-    list_display = ('email', 'first_name', 'last_name', 'is_member', 'rating','is_staff', 'newsletter_subscription', 'has_berkeley_email', 'is_admin', 'date_joined', 'is_active',)
+    list_display = ('email', 'first_name', 'last_name', 'is_member', 'rating','is_staff', 'has_berkeley_email', 'is_admin', 'date_joined', 'is_active',)
     list_filter = ()
 
     fieldsets = (
-        (None, {'fields': ('email', 'password', 'first_name', 'last_name','rating', 'is_member', 'newsletter_subscription','last_drop_in_date')}),
+        (None, {'fields': ('email', 'password', 'first_name', 'last_name','rating', 'is_member', 'last_drop_in_date')}),
         ('Permissions', {'fields': ('is_staff','is_admin', 'is_active', 'groups')}),
     )
     readonly_fields=('email','is_staff','is_admin',)

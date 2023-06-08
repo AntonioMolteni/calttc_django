@@ -1,0 +1,28 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load socialaccount %}
+{% load account %}
+
+{% block content %}
+
+<div class="container-fluid">
+	<div class="row">
+
+		<!-- Desktop Iframe -->
+		<div class="col d-none d-md-block">
+			<div class="ratio ratio-21x9 text-center">
+				<iframe src="https://www.google.com/maps/d/embed?mid=111dwi-_btwt0nSpODW-dqJ5cJxehN5k&ehbc=2E312F" width="640" height="480"></iframe>
+			</div>
+		</div>
+
+		<!-- Mobile Iframe -->
+		<div class="col d-md-none">
+			<div class="ratio ratio-1x1 text-center">
+				<iframe src="https://www.google.com/maps/d/embed?mid=111dwi-_btwt0nSpODW-dqJ5cJxehN5k&ehbc=2E312F" width="640" height="480"></iframe>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+{% endblock content %}

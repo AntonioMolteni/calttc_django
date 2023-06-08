@@ -33,10 +33,11 @@ urlpatterns = [
     path('sessions/', include('session.urls')),
     path('schedule/', include('schedule.urls')),
     path('announcements/', include('announcements.urls')),
-    path('newsletter/', include('newsletter.urls')),
     path('team/', include('team.urls')), 
     path('images/', include('images.urls')),
+    path('table_locations/', views.table_locations, name='table-locations'),
     path('graphics/', views.graphics, name='graphics'),
+    path('all_graphics/', views.all_graphics, name='all-graphics'),
     path('home/', views.home, name='home'),
     path('', views.home, name=''),
     ]
