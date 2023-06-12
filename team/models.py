@@ -52,24 +52,25 @@ class Profile(models.Model):
 			
 			# "BASE_DIRECTORY/media/"
 			new_location_prefix = original_location.split('/profile_pictures')[0]
-
-			# "profile_pictures/user_display_name.input_file_ext
-			new_name = content_file_name(user_filename(self.user), self.profile_picture.name)
+			if self.user != None:
+				# "profile_pictures/user_display_name.input_file_ext
+				new_name = content_file_name(user_filename(self.user), self.profile_picture.name)
+				
+				# "BASE_DIRECTORY/media/profile_pictures/user_display_name.input_file_ext"
+				
+				new_location = os.path.join(new_location_prefix, new_name)
 			
-			# "BASE_DIRECTORY/media/profile_pictures/user_display_name.input_file_ext"
-			new_location = os.path.join(new_location_prefix, new_name)
-			
-			if self.profile_picture != self.__original_profile_picture:
-				try:	
-					os.remove(original_location)
-				except:
-					pass
-			if self.user != self.__original_user:
-				try:
-					os.rename(original_location, new_location)
-				except:
-					pass
-				self.profile_picture = new_name
+				if self.profile_picture != self.__original_profile_picture:
+					try:	
+						os.remove(original_location)
+					except:
+						pass
+				if self.user != self.__original_user:
+					try:
+						os.rename(original_location, new_location)
+					except:
+						pass
+					self.profile_picture = new_name
 
 		# call original save function
 		super(Profile, self).save(*args, **kwargs)

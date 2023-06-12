@@ -44,13 +44,12 @@
 
 		</div>
 	</div>
-
 	
 	<form method="post" action="">
 	{% csrf_token %}
 	{{ formset.management_form }}
 	<div class="row">
-		<!-- Members Players-->
+		<!-- Members-->
 		<div class="col-md-5 col-lg-4">
 			<table class="table table-sm">
 				<thead>
@@ -77,9 +76,31 @@
 			</table>
 			<input type="submit" value="Save" class="btn btn-sm btn-outline-info btn-lg"/>
 			<br/><br/>
+
+			<!-- Officers -->
+			<table class="table table-sm">
+				<thead>
+					<tr style="border-top: none;">
+						<th>Officers</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+				{% for officer in officers %}
+					<tr>
+						<td>
+							<img class="rounded-circle" src="{{ member.socialaccount_set.all.0.get_avatar_url }}" style="height:1.5rem;"/>
+							&emsp;
+							{{ officer.display_name }}
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			<input type="submit" value="Save" class="btn btn-sm btn-outline-info btn-lg"/>
+			<br/><br/>
 		</div>
-		
-		<!-- Do Not Touch This Template (Extremely Delicate) -->
+
 		<!-- All Users -->
 		<div class="col-md-7 col-lg-6" >
 			<table class="table table-sm">
@@ -87,6 +108,12 @@
 					<tr style="border-top: none;">
 						<th>All Users</th>
 						<th class="text-center">Member</th>
+						{% if user.is_superuser or user.is_admin %}
+						<th class="text-center">Officer</th>
+						{% endif %}
+						{% if user.is_superuser%}
+						<th class="text-center">Admin</th>
+						{% endif %}
 						<th class="text-center">Rating</th>
 					</tr>
 				</thead>
@@ -95,13 +122,29 @@
 					{{ form.id }}
 					<tr>
 						<td>
-							{{ form.instance.display_name }}
+							{{ form.instance }}
 							<b style="color:#FF0000">{{ form.is_member.errors }}</b>
+							{% if user.is_superuser or user.is_admin %}
+							<b style="color:#FF0000">{{ form.is_staff.errors }}</b>
+							{% endif %}
+							{% if user.is_superuser %}
+							<b style="color:#FF0000">{{ form.is_admin.errors }}</b>
+							{% endif %}
 							<b style="color:#FF0000">{{ form.rating.errors }}</b>
 						</td>
 						<td class="text-center">
 							{{ form.is_member }}
 						</td>
+						{% if user.is_superuser or user.is_admin %}
+						<td class="text-center">
+							{{ form.is_staff }}
+						</td>
+						{% endif %}
+						{% if user.is_superuser %}
+						<td class="text-center">
+							{{ form.is_admin }}
+						</td>
+						{% endif %}
 						<td class="text-center" style="width:4rem;">
 							{{ form.rating }}
 						</td>		

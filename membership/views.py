@@ -18,7 +18,7 @@ def membership(request):
   announcements = Announcement.objects.filter(on_membership_page=True)
   dues_links = DuesLink.objects.all()
 
-  return render(request, "membership.html",
+  return render(request, "membership/membership.html",
     {
       'page_title': page_title,
       'announcements': announcements,

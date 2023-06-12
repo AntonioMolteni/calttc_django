@@ -258,6 +258,14 @@ a:hover, a {
 .st-bg-today, .st-bg-td-first{
   background: black;
 }
+/*--------------*/
+/*-- Sessions --*/
+/*--------------*/
+.form-control{
+  display: flex ;
+  margin-bottom: 0.25rem;
+}
+
 /*----------*/
 /*-- Team --*/
 /*----------*/

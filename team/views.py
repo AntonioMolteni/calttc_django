@@ -16,7 +16,7 @@ def team(request):
     executive_profiles = Profile.objects.filter(executive = True).order_by('pk')
     officer_profiles = Profile.objects.filter(officer = True).order_by('user__display_name')
     competitive_team_profiles = Profile.objects.filter(competitive_team = True).exclude(user=None).order_by('-user__rating')
-    return render(request, "team.html",
+    return render(request, "team/team.html",
         {
         'page_title': page_title,
         'announcements': announcements,

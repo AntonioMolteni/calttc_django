@@ -17,24 +17,16 @@ LocationChoices = (
   ('RSFCombat','RSF Combatives Room'),
 )
 
-DurationChoices = (
-  ('30','30 Minutes'),
-  ('60','60 Minutes'),
-  ('90','90 Minutes'),
-  ('120','2 Hours'),
-  ('180','3 Hours'),
-)
-
 # cutoff for session sign_ups in minutes
-cutoff = 15
+cutoff = 5
 
 class Session(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
-  session_type = models.CharField(max_length=30, choices=SessionTypeChoices, default='Novice Training')
+  session_type = models.CharField(max_length=30, choices=SessionTypeChoices, default='')
   location = models.CharField(max_length=30, choices=LocationChoices, default='RSF Field House')
   time = models.DateTimeField()
-  duration = models.CharField(max_length=30, choices=DurationChoices, default='60 Minutes')
-  capacity = models.IntegerField(default=8)
+  duration = models.PositiveIntegerField()
+  capacity = models.IntegerField()
   note = models.CharField(max_length=300, default=None, blank=True, null=True)
   is_closed = models.BooleanField(default = False)
   is_cancelled = models.BooleanField(default=False)
@@ -86,6 +78,9 @@ class Session(models.Model):
 
   def is_training(self):
     return self.session_type == "NT" or self.session_type == "IT" or self.session_type == "AT"
+  
+  def is_competitive_team_tryouts(self):
+    return self.session_type == "CT"
     
   def is_tournament(self):
     return self.session_type == "RR" or self.session_type == "TO"

@@ -14,6 +14,18 @@ $(document).ready(function(){
 </script>
 {% endif %}
 
+{% if request.GET.no_rating %}
+<body>
+  <script>
+    window.onload = function() {
+      if (confirm('Please add your USATT rating or approximate rating to your profile in your account settings to sign-up')) {
+        window.location.href = "{% url 'account-settings' %}?next={{request.path}}";
+      } 
+    };
+  </script>
+</body>
+{% endif %}
+
 <!-- Sessions -->
 <div class="container-fluid padding">
 	<div class="row emphasis">
@@ -28,7 +40,7 @@ $(document).ready(function(){
 				<a href={% anchor 'schedule' 'intermediate-training' %}>Intermediate Training</a>, 
 				<a href={% anchor 'schedule' 'advanced-training' %}>Advanced Training</a> & 
 				<a href={% anchor 'schedule' 'tournaments' %}>Tournaments</a>.   
-				Session sign-ups are closed {{ cutoff }} minutes before it begins.  
+				Session sign-ups are closed {{ cutoff }} minutes before the posted time.  
 				If you would like to attend two sessions, you should sign-up for your preferred session first and then sign up for the other session afterward.
 				If there is space available after the cutoff, you will be added.
 				<br/><br/>
@@ -58,7 +70,7 @@ $(document).ready(function(){
 			<ol>
 				<li>Choose the session you would like to attend and hit sign-up</li>
 				<li>Training sessions prioritize <a href={% url 'membership' %}>Membership</a>
-				<li>Show up to the location listed at Berkeley time (10 minutes after posted time)</li>
+				<li>Show up to the location listed at the posted time (not Berkeley Time) or your slot may be filled by someone else</li>
 			</ol>
 		
 		</div>
@@ -66,7 +78,7 @@ $(document).ready(function(){
 		<div class="col-xs-8 col-sm-7 col-lg-5 col-xl-4">
 			<h4><b>Sessions</b></h4>
 			{% if user.is_staff %}
-				<b><a href={% url 'add-session' %} class="btn btn-outline-success btn-sm">Add Session</a></b><br/>
+				<b><a href={% url 'add-sessions' %} class="btn btn-outline-success btn-sm">Add Sessions</a></b><br/>
 			{% endif %}
 
 			{% if not all_sessions %}
@@ -77,7 +89,7 @@ $(document).ready(function(){
 			<a class="anchor" id={{ session.get_id }}></a>
 
 			<!-- you can use get_where_display or get_duration_display as well -->
-			<h5><b>{{session.get_session_type_display}}</b></h5>
+			<big><b>{{session.get_session_type_display}}</b></big><br/>
 			<b><u>{{ session }}</b></u> &emsp;&emsp;
 			
 			{% if session.is_cancelled %}
@@ -157,7 +169,7 @@ $(document).ready(function(){
 					{% if session.get_wait_list %}
 						<thead>
 							<tr>
-								<th >Wait List</th>
+								<th>Wait List</th>
 								<th class="text-center"></th>
 							</tr>
 						</thead>
@@ -197,7 +209,7 @@ $(document).ready(function(){
 				</tbody>
 			</table>
 			{% endif %}
-			<br/>
+		
 			{% endfor %}
 		</div>
 	</div>

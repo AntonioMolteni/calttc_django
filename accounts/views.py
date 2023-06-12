@@ -70,18 +70,24 @@ def manage_users(request):
     # Queries
     registered_users = User.objects.filter(is_registered = True)
     members = User.objects.filter(is_member = True)
+    if User.is_superuser:
+        officers = User.objects.filter(is_staff = True)
+    else:
+        officers = None
     users = User.objects.all()
     
 
     # Formset for multiple forms
     widgets={
         "is_member": CheckboxInput(attrs={'class':'checkbox-control', 'tabindex':'-1'},),
+        "is_staff": CheckboxInput(attrs={'class':'checkbox-control', 'tabindex':'-1'},),
+        "is_admin": CheckboxInput(attrs={'class':'checkbox-control', 'tabindex':'-1'},),
         "rating": TextInput(attrs={'class':'form-control rating','type':'tel'},),
         }
     if not request.user.is_admin:
         widgets['is_member']= CheckboxInput(attrs={'class':'checkbox-control readonly', 'tabindex':'-1'},)
    
-    ManageUsersFormSet = modelformset_factory(User, fields=('is_member','rating'),
+    ManageUsersFormSet = modelformset_factory(User, fields=('is_member','is_staff','is_admin','rating'),
         extra = 0, widgets=widgets
         )
 
@@ -106,7 +112,8 @@ def manage_users(request):
         'page_title': page_title,
         'registered_users': registered_users,
         'members': members,
-        'formset': formset}
+        'officers':officers,
+        'formset': formset }
     )
 
 

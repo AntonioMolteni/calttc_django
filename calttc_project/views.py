@@ -6,10 +6,7 @@ from django.conf import settings
 from django.http import HttpResponse
 import shutil
 from django.views.decorators.csrf import csrf_exempt
-import time
 
-
- 
 def home(request):
     # should just have "Cal Table Tennis" as Title for not 
     # "Home | Cal Table Tennis" for search result optimization and
@@ -24,7 +21,7 @@ def home(request):
             primary_carousel_image = all_carousel_images[0]
             carousel_images = all_carousel_images[1:]
         primary_carousel_image
-        return render(request, "home.html",
+        return render(request, "calttc_project/home.html",
             {
             'page_title': page_title,
             'primary_carousel_image' : primary_carousel_image,
@@ -67,7 +64,7 @@ def graphics(request):
     assets_raw.sort()
     assets = filter(not_a_file, assets_raw)
     
-    return render(request, "graphics.html",
+    return render(request, "calttc_project/graphics.html",
         {
         'page_title': page_title,
         'logos': logos,
@@ -78,6 +75,7 @@ def graphics(request):
         'assets': assets,
         }
     )
+
 # https://stackoverflow.com/questions/1855095/how-to-create-a-zip-archive-of-a-directory
 @csrf_exempt
 def all_graphics(request):
@@ -113,15 +111,12 @@ def all_graphics(request):
     os.remove(output_filename)
     return response
 
-
-
-
 def table_locations(request):
     page_title = "Table Locations"
     if 'next' in request.GET:
         return redirect(request.GET.get('next'))
     else:    
-        return render(request, "table_locations.html",
+        return render(request, "calttc_project/table_locations.html",
             {
             'page_title': page_title,
             }

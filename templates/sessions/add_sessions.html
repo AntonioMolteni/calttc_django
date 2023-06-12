@@ -15,14 +15,18 @@
 					{{ form.location }}
 					<b style="color:#FF0000">{{ form.location.errors }}</b>
 						
-					<b>{{ form.time.label }}:</b>
-					{{ form.time }}
-					<b style="color:#FF0000">{{ form.time.errors }}</b>
+					<b>{{ form.start_time.label }}:</b>
+					{{ form.start_time }}
+					<b style="color:#FF0000">{{ form.start_time.errors }}</b>
 
-					<b>{{ form.duration.label }}:</b>
-					{{ form.duration }}
-					<b style="color:#FF0000">{{ form.duration.errors }}</b>
+					<b>{{ form.total_duration.label }}:</b>
+					{{ form.total_duration }}
+					<b style="color:#FF0000">{{ form.total_duration.errors }}</b>
 					
+					<b>{{ form.num_sessions.label }}:</b>
+					{{ form.num_sessions }}
+					<b style="color:#FF0000">{{ form.num_sessions.errors }}</b>
+
 					<b>{{ form.capacity.label }}:</b>
 					{{ form.capacity }}
 					<b style="color:#FF0000">{{ form.capacity.errors }}</b>

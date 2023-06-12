@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
 )
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import Group
 
 
 
@@ -63,6 +64,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	is_superuser = models.BooleanField(default=False)
 	date_joined = models.DateTimeField(auto_now_add=True)
 	sign_up_date = models.DateTimeField(null=True, blank=True)
+	
 
 	class Meta:
 		ordering = ['first_name']
@@ -74,8 +76,19 @@ class User(AbstractBaseUser, PermissionsMixin):
  
 #  check useradmin for code that updates the is_staff and is_admin when the form is submitted
 	def save(self, *args, **kwargs):
-		self.is_staff = self.groups.filter(name="Staff").exists()
-		self.is_admin = self.groups.filter(name="Admin").exists()	
+		staff_group = Group.objects.get(name='Staff')
+		admin_group = Group.objects.get(name='Admin')
+		if self.is_staff:
+			self.groups.add(staff_group)
+		else:
+			self.groups.remove(staff_group)
+		if self.is_admin:
+			self.groups.add(admin_group)
+		else:
+			self.groups.remove(admin_group)
+		if self.is_superuser:
+			self.is_admin = True
+			self.is_staff = True
 		self.has_berkeley_email = "@berkeley.edu" in self.email
 		super(User, self).save(*args, **kwargs)
 

@@ -14,7 +14,7 @@ def schedule(request):
     intermediate_training_time_slots = TimeSlot.objects.filter(intermediate_training=True)
     advanced_training_time_slots = TimeSlot.objects.filter(advanced_training=True)
     tournaments_time_slots = TimeSlot.objects.filter(tournaments=True)
-    return render(request, "schedule.html",
+    return render(request, "schedule/schedule.html",
         {
         'page_title': page_title,    
         'announcements': announcements,

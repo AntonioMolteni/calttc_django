@@ -9,14 +9,23 @@ class AccountUserAdmin(UserAdmin):
     add_form = AccountCreationForm
     form = AccountChangeForm
     model = User
-    list_display = ('email', 'first_name', 'last_name', 'is_member', 'rating','is_staff', 'has_berkeley_email', 'is_admin', 'date_joined', 'is_active',)
+    list_display = ('email', 'first_name', 'last_name', 'is_member', 'rating', 'is_admin', 'is_staff', 'is_active', 'date_joined', 'has_berkeley_email',)
     list_filter = ()
 
     fieldsets = (
-        (None, {'fields': ('email', 'password', 'first_name', 'last_name','rating', 'is_member', 'last_drop_in_date')}),
-        ('Permissions', {'fields': ('is_staff','is_admin', 'is_active', 'groups')}),
+        (None, {'fields': ('email', 'password', 'first_name', 'last_name','rating', 'is_member',)}),
+        ('Permissions', {'fields': ('is_admin', 'is_staff', 'is_active', 'groups')}),
     )
-    readonly_fields=('email','is_staff','is_admin',)
+    readonly_fields=('email','groups',)
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = list(super().get_readonly_fields(request, obj))
+        if not request.user.is_superuser:
+            readonly_fields.append('is_admin')
+            if not request.user.is_admin:
+                readonly_fields.append('is_staff')
+        return readonly_fields
+    
     add_fieldsets = (
         (None, {
             'classes': ('wide',),

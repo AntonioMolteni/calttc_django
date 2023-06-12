@@ -1,6 +1,38 @@
 {% extends 'base.html' %} 
 {% block content %}
 
+<!-- Script to copy table -->
+<script>
+	function copyData() {
+			var tableRows = document.querySelectorAll("table.table tbody tr");
+
+			var data = "";
+			for (var i = 0; i < tableRows.length; i++) {
+					var displayName = tableRows[i].querySelector("td:first-child").textContent.trim();
+					var isMember = tableRows[i].querySelector("td:nth-child(2)").textContent.trim() === "🏓";
+					var rating = tableRows[i].querySelector("td:nth-child(3)").querySelector("input").value.trim();
+
+					data += "<tr><td>" + displayName + "</td>";
+					data += "<td>" + rating + "</td></tr>";
+			}
+
+			var tempElement = document.createElement("table");
+			tempElement.innerHTML = "<thead><tr><th colspan='1' style='font-weight:bold;'>Display Name</th><th style='font-weight:bold;'>Rating</th></tr></thead><tbody>" + data + "</tbody>";
+			document.body.appendChild(tempElement);
+		
+			var range = document.createRange();
+			range.selectNodeContents(tempElement);
+			var selection = window.getSelection();
+			selection.removeAllRanges();
+			selection.addRange(range);
+			document.execCommand("copy");
+			
+			document.body.removeChild(tempElement);
+	
+			alert("Table copied to clipboard!");
+	}
+</script>
+
 <div class="container-fluid padding">
 	<div class="row">
 		<div class="col-12">
@@ -32,13 +64,16 @@
 								{% endif %}
 							</td>
 							<td class="text-center" style="width:4rem;">
-								{{form.id}}
 								{{form.rating}}
+								{{form.id}}
 							</td>		
+							
 						</tr>
 						{% endfor %}
 				</table>
 				<br/><input type="submit" value="Save" class="btn btn-outline-info btn-lg"/>
+				&emsp;
+				<button type="button" class="btn btn-outline-success btn-lg" onclick="copyData()">Copy to Clipboard</button>
 			</form>
 		</div>
 	</div>
