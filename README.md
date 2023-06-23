@@ -99,7 +99,7 @@ You are now in a new branch.  You can go back to the main branch by running `git
 * stage individual files by doing `git add [yourfilename]`.    
 * stage all of the files you changed by doing `git add .` or `git add -A`.    
 8. Now that all of your changed files are staged, we can commit (basically saves the changes that you have made).  This allows us to restore this _commit_ later if we wish to.  Come up with a commit message that is relatively short and describes the changes that you have made.  Commit by running `git commit -m "[yourcommitmessage]"`. 
-9. After the changes are committed, we can upload our local repository to the remote github repository.  This can be done using `git push`.
+9. After the changes are committed, we can upload our local repository to the remote github repository.  This can be done using `git push https://github.com/CalTableTennis/calttc_django`.
 * You must be a __Collaborator__ on the CalTTC github page to do this step.  
 * There is a possibility that you may have to do `git push --set-upstream origin [yourbranchname]` if it is your first time pushing.
 10. Now your terminal will give you some instructions to do a pull request on `https://github.com/CalTableTennis/calttc_django/pull/new/[yourbranchname]`.    
