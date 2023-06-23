@@ -10,6 +10,8 @@ from team.forms import ProfileForm
 from .forms import ExportEmailCSVForm
 import csv
 from django.http import HttpResponse
+from django.utils import timezone
+from datetime import timedelta
 
 
 def login(request):
@@ -69,12 +71,14 @@ def manage_users(request):
 
     # Queries
     registered_users = User.objects.filter(is_registered = True)
+    
     members = User.objects.filter(is_member = True)
     if User.is_superuser:
         officers = User.objects.filter(is_staff = True)
     else:
         officers = None
-    users = User.objects.all()
+
+    users = User.objects.query_last_login_within_8_months()
     
 
     # Formset for multiple forms

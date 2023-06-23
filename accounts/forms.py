@@ -10,8 +10,6 @@ class AccountCreationForm(UserCreationForm):
 
 
 class AccountChangeForm(UserChangeForm):
-
-
 	class Meta:
 		model = User
 		fields = ('rating',)

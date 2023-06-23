@@ -55,6 +55,7 @@
 						Sign-in to the cal rec sports website through either link below to pay dues.  This will add you the official RSF member list.
 						<ul>
 						{% for dues_link in dues_links %}
+							
 							{% if dues_link.link_url %}
 							<li>
 								{% if dues_link.link_url and dues_link.link_text%}
@@ -63,7 +64,7 @@
 									{% else %}
 										<a href="{{ dues_link.link_url }}">{{ dues_link.link_text }}</a>
 									{% endif%}
-								{% elif dues_link.link_url%}
+								{% elif dues_link.link_url %}
 									{% if dues_link.link_opens_in_new_tab %}
 										<a href="{{ dues_link.link_url }}" target="_blank" rel="noreferrer noopener">{{ dues_link.link_url }}</a>
 									{% else %}
@@ -71,13 +72,16 @@
 									{% endif %}
 								{% endif %}
 							</li>
+							{% elif dues_link.link_text %}
+							<li>
+								{{ dues_link.link_text }}
+							</li>
 							{% endif %}
 						{% endfor %}
-
 						</ul>
 					</li>
 					<li>
-						Once you paid dues, register below.  This will allow us to update your membership status on the cal table tennis website.
+						Once you pay dues, register below.  This will allow us to update your membership status on the cal table tennis website.
 					</li>
 				</ol>
 					

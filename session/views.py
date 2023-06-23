@@ -154,7 +154,7 @@ def sign_up(request, session_id):
         if session.is_tournament():
             session.players.add(request.user)
         elif session.is_competitive_team_tryouts() and request.user.rating == 0:
-            return redirect(reverse('sessions') + '?no_rating=True'+ '#' + session.get_id())
+            return redirect(reverse('sessions') + '?no_rating=True')
         elif session.is_competitive_team_tryouts():
             session.players.add(request.user)
         else:

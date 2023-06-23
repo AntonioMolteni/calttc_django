@@ -6,6 +6,9 @@ from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import Group
 
+from django.utils import timezone
+from datetime import timedelta
+
 
 
 class UserManager(BaseUserManager):
@@ -40,7 +43,12 @@ class UserManager(BaseUserManager):
 			raise ValueError('Superuser must have is_superuser=True.')
 
 		return self._create_user(email, password, **extra_fields)
-
+	
+	# used in manage users
+	def query_last_login_within_8_months(self):
+		today = timezone.now().date()
+		eight_months_ago = today - timedelta(days=8*30)
+		return User.objects.filter(last_login__range=[eight_months_ago, today])
 		
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -97,7 +105,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 		if(hasattr(self, 'team_profile')):
 			return self.team_profile
 		return None
-
 
 	def display_name(self):
 		if self.first_name and self.last_name:

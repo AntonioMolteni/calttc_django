@@ -4,7 +4,7 @@
 <div class="container-fluid padding">
 	<div class="row">
 		<div class="col-12">
-			<h1><b>Add Session</b></h1>
+			<h1><b>Add Sessions</b></h1>
 				<form action="" method=POST>
 					{% csrf_token %}
 					<b>{{ form.session_type.label }}:</b>
@@ -40,7 +40,7 @@
 					<b style="color:#FF0000">{{ form.note.errors }}</b>
 					<br/>
 					
-					<input type="submit" value="Add Session" class="btn btn-outline-success btn-lg">
+					<input type="submit" value="Add Sessions" class="btn btn-outline-success btn-lg">
 				</form>
 		</div>
 	</div>

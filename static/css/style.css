@@ -107,15 +107,9 @@ a:hover, a {
   scroll-margin-top: 4.5rem 
 }
 
-/* badge on google profile picture */
-.corner-badged-item {
-  position:relative;
-  display:inline-block;
-}
-.corner-badge{
-  position: absolute;
-  right:-1em;
-  top:-10px;
+.badge-position {
+  position: relative;
+  top: -0.1rem;
 }
 
 @media (max-width: 1200px) {

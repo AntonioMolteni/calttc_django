@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from .models import Session
 from datetime import timedelta, datetime
+from accounts.models import User
 
 
 class SessionAdminForm(ModelForm):
@@ -71,6 +72,10 @@ class AddSessionsForm(ModelForm):
 
 
 class EditSessionForm(ModelForm):
+  
+  def get_filtered_players_queryset(self):
+      return User.objects.query_last_login_within_8_months
+
   class Meta:
     model = Session
     fields = '__all__'
@@ -98,3 +103,5 @@ class EditSessionForm(ModelForm):
       self.fields['time'].widget = forms.SplitDateTimeWidget(
         date_attrs={'type': 'date','class': 'form-control'},
         time_attrs={'type': 'time','class': 'form-control'})
+      self.fields['players'].queryset = User.objects.query_last_login_within_8_months()
+      self.fields['queue'].queryset = User.objects.query_last_login_within_8_months()

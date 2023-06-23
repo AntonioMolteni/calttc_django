@@ -53,7 +53,7 @@
 				{% if announcement.content or announcement.link_url %}
 				<h5>
 					{% if announcement.content %}
-						{{ announcement.content }}<br/>
+						{{ announcement.content|linebreaksbr }}<br/>
 					{% endif %}
 					{% if announcement.link_url and announcement.link_text%}
 						{% if announcement.link_opens_in_new_tab %}
@@ -190,7 +190,7 @@
 				{% if announcement.content or announcement.link_url %}
 				<p>
 					{% if announcement.content %}
-						{{ announcement.content }}<br/>
+						{{ announcement.content|linebreaksbr }}<br/>
 					{% endif %}
 					{% if announcement.link_url and announcement.link_text%}
 						{% if announcement.link_opens_in_new_tab %}

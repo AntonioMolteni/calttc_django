@@ -1,6 +1,6 @@
 from datetime import timedelta, datetime
 from django.db import models
-
+from django.utils import timezone
 from accounts.models import User
 
 SessionTypeChoices = (
@@ -19,6 +19,13 @@ LocationChoices = (
 
 # cutoff for session sign_ups in minutes
 cutoff = 5
+
+today = timezone.now().date()
+eight_months_ago = today - timedelta(days=8*30)  # Assuming 30 days per month
+
+# Filter the members queryset based on the last login date range
+users = User.objects.filter(last_login__range=[eight_months_ago, today])
+    
 
 class Session(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
@@ -84,4 +91,6 @@ class Session(models.Model):
     
   def is_tournament(self):
     return self.session_type == "RR" or self.session_type == "TO"
+  
+
   

@@ -26,8 +26,8 @@ DEBUG = False
 PRODUCTION = True
 
 # Comment this block out for production
-# DEBUG = True
-# PRODUCTION = False
+DEBUG = True
+PRODUCTION = False
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

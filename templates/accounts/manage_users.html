@@ -89,7 +89,7 @@
 				{% for officer in officers %}
 					<tr>
 						<td>
-							<img class="rounded-circle" src="{{ member.socialaccount_set.all.0.get_avatar_url }}" style="height:1.5rem;"/>
+							<img class="rounded-circle" src="{{ officer.socialaccount_set.all.0.get_avatar_url }}" style="height:1.5rem;"/>
 							&emsp;
 							{{ officer.display_name }}
 						</td>
@@ -101,12 +101,16 @@
 			<br/><br/>
 		</div>
 
-		<!-- All Users -->
-		<div class="col-md-7 col-lg-6" >
+		<!-- All Active Users (has logged in within the last 8 months) -->
+		<div class="d-block d-sm-none">
+			To edit user information, rotate your phone sideways or view on a larger screen.
+		</div>
+		
+		<div class="col-md-7 col-lg-8 d-none d-sm-block" >
 			<table class="table table-sm">
 				<thead>
 					<tr style="border-top: none;">
-						<th>All Users</th>
+						<th>Active Users in past 8 months</th>
 						<th class="text-center">Member</th>
 						{% if user.is_superuser or user.is_admin %}
 						<th class="text-center">Officer</th>
@@ -122,6 +126,8 @@
 					{{ form.id }}
 					<tr>
 						<td>
+							<img class="rounded-circle" src="{{ form.instance.socialaccount_set.all.0.get_avatar_url }}" style="height:1.5rem;"/>
+							&emsp;
 							{{ form.instance }}
 							<b style="color:#FF0000">{{ form.is_member.errors }}</b>
 							{% if user.is_superuser or user.is_admin %}

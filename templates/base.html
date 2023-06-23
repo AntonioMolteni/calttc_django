@@ -89,7 +89,7 @@
 	<!-- If the stylesheet is updated and causing browser issues, it is because you need to -->
 	<!-- update the version number below(1.0 becomes 1.1 etc.). This will force the browser -->
 	<!-- to reset its cache by reloading the style.css file. -->
-	<link rel="stylesheet" type="text/css" href= "{% static "css/style.css" %}?v=7.2">
+	<link rel="stylesheet" type="text/css" href= "{% static "css/style.css" %}?v=7.4">
 
 </head>
 
@@ -102,16 +102,18 @@
 	{% url "home" as url %}
 	<a class="navbar-brand" href={{ url }}><img src={% static "graphics/logo.png" %}></a>
 	<!-- Button to Collapse the Hamburger Navbar Dropdown Menu -->
-	<button class="navbar-toggler collapsed" style="border-color: transparent;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+	<button class="navbar-toggler collapsed position-relative" style="border-color: transparent;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 		aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" id="toggler">
 		<!-- Hamburger Menu Icon -->
 		<span class="icon-bar top-bar"></span>
 		<span class="icon-bar middle-bar"></span>
 		<span class="icon-bar bottom-bar"></span>
-
+		<!-- Badge on Hamburger -->
 		{% if user.is_staff and num_notifications %}
-		<span class="badge badge-danger">{{ num_notifications }}</span>
+		<span class="position-absolute translate-middle-y top-50 end-100 badge rounded-pill bg-danger">{{ num_notifications }}</span>
 		{% endif %}
+
+
 	</button>
 	<!-- Indicates content that can be collapsed for smaller screens-->
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -182,20 +184,24 @@
 				<!-- account/google profile picture -->
 				<a class="nav-link" href="{% provider_login_url 'google' action='reauthenticate' next=request.path %}" id="navbarDropdown" role="button" 
 				data-bs-toggle="dropdown" aria-expanded="false">
+					<!-- Badge next to Account -->
 					<span class="d-md-none">
 						Account
 						{% if user.is_staff and num_notifications %}
-						<span class="badge badge-danger">{{ num_notifications }}</span>
+						<span class="badge rounded-pill bg-danger badge-position">{{ num_notifications }}</span>
 						{% endif %}
 					</span>
-					<span class="corner-badged-item d-none d-md-block">
+					
+					<!-- Badge on user's google profile picture -->
+					<span class="d-none d-md-block">
 						<img class="account-image rounded-circle" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" style="height: 2.5rem;"/>
 						{% if user.is_staff and num_notifications %}
-						<span class="corner-badge badge badge-danger">{{ num_notifications }}</span>
+						<span class="top-0 start-100 translate-middle badge rounded-pill badge bg-danger">{{ num_notifications }}</span>
+						
 						{% endif %}
 					</span>
 				</a>
-				<!-- dropdown menu -->
+				
 				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 					<li><a class="dropdown-item" href="{% url 'account-settings' %}?next={{request.path}}">Account Settings</a></li>
 					<li><form id="logoutid" action="{% url 'logout' %}" method="post">{% csrf_token %}</form></li>
@@ -210,8 +216,9 @@
 						<li><hr class="dropdown-divider"></li>
 
 						<li><a class="dropdown-item" href="{% url 'manage-users' %}?next={{request.path}}">Manage Users
+							<!-- Badge next to manage users -->
 							{% if num_notifications %}
-								<span class="badge badge-danger">{{ num_notifications }}</span>
+								<span class="badge rounded-pill bg-danger badge-position">{{ num_notifications }}</span>
 							{% endif %}
 						</a></li>
 					{% endif %}		
@@ -248,8 +255,8 @@
 				{% endif %}
 				{% if announcement.content or announcement.link_url %}
 				<h5>
-					{% if announcement.content %}
-						{{ announcement.content }}<br/>
+					{% if announcement.content  %}
+						{{ announcement.content|linebreaksbr }}<br/>
 					{% endif %}
 					{% if announcement.link_url and announcement.link_text%}
 						
@@ -308,9 +315,9 @@
 				<br/>
 				<h4><b>Contact Us</b></h4>
 				
-				<a href="https://discord.gg/ExU73ZQdTv" 
+				<a href="https://join.slack.com/t/caltabletenni-rop5169/shared_invite/zt-1x2g09jmr-do6tlIkyeHQRyjnrM0~TJQ" 
 				target="_blank" rel="noreferrer noopener">
-					<img class="contact" src={% static "graphics/company_icons/discord.svg" %}>
+					<img class="contact" src={% static "graphics/company_icons/slack.svg" %}>
 				</a>
 				<a href="https://www.instagram.com/calttc/?hl=en" 
 				target="_blank" rel="noreferrer noopener">
@@ -324,7 +331,7 @@
 				target="_blank" rel="noreferrer noopener">
 					<img class="contact" src={% static "graphics/company_icons/youtube.svg" %}>
 				</a>
-				<a href="mailto:calttc@gmail.com?subject=Inquiry: {{user.email}}">
+				<a href="mailto:calttc@gmail.com">
 					<img class="contact" src={% static "graphics/company_icons/gmail.svg" %}>
 				</a>
 
