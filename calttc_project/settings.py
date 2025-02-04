@@ -17,10 +17,10 @@ import os
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$hp0n+-djf$lxomb8+#xdanvy3wze8up4603!p1hnl9oq$0$!2'
+SECRET_KEY = "django-insecure-$hp0n+-djf$lxomb8+#xdanvy3wze8up4603!p1hnl9oq$0$!2"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True provides error message and hosts static files while in development.
+# DEBUG = True provides error message and hosts static files while in development.
 
 DEBUG = False
 PRODUCTION = True
@@ -37,80 +37,81 @@ if PRODUCTION:
     BASE_DIR = Path(__file__).resolve().parent.parent
 
 ALLOWED_HOSTS = [
-    '10.0.0.95',
-    '127.0.0.1',
-    'www.ocf.berkeley.edu',
-    'calttc.berkeley.edu',]
+    "10.0.0.95",
+    "127.0.0.1",
+    "www.ocf.berkeley.edu",
+    "calttc.berkeley.edu",
+]
 # local, antoniotestserver, calttc live server
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
-    
-    'calttc_project',
-    'accounts',
-    'team',
-    'session',
-    'schedule',
-    'images',
-    'announcements',
-    'membership',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "calttc_project",
+    "accounts",
+    "team",
+    "session",
+    "schedule",
+    "images",
+    "announcements",
+    "membership",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
-ROOT_URLCONF = 'calttc_project.urls'
+ROOT_URLCONF = "calttc_project.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'calttc_project.context_processors.get_current_year_to_context',
-                'calttc_project.context_processors.get_schedule_to_context',
-                'calttc_project.context_processors.get_footer_image_to_context',
-                'calttc_project.context_processors.get_staff_notifications_to_context',
-                'calttc_project.context_processors.get_newsletter_verification_to_context',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "calttc_project.context_processors.get_current_year_to_context",
+                "calttc_project.context_processors.get_schedule_to_context",
+                "calttc_project.context_processors.get_footer_image_to_context",
+                "calttc_project.context_processors.get_staff_notifications_to_context",
+                "calttc_project.context_processors.get_newsletter_verification_to_context",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'calttc_project.wsgi.application'
+WSGI_APPLICATION = "calttc_project.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -120,16 +121,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -137,9 +138,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'America/Los_Angeles'
+TIME_ZONE = "America/Los_Angeles"
 
 USE_I18N = True
 
@@ -150,7 +151,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 
-# STATIC URL: file that shows up when you use {% static 'your/url/'%} only updates after 
+# STATIC URL: file that shows up when you use {% static 'your/url/'%} only updates after
 # you delete static from publichtml/django and run
 
 # 'venv/bin/python manage.py collectstatic'
@@ -160,20 +161,22 @@ USE_TZ = False
 
 # STATIC_ROOT: where files are copied when you run collect static
 
-# STATICFILES_DIRS: source of the static files that are copied when you run collect static 
+# STATICFILES_DIRS: source of the static files that are copied when you run collect static
 
-STATIC_URL = 'static/'
-MEDIA_URL = 'media/'
-STATICFILES_DIRS = [BASE_DIR / 'static',]
+STATIC_URL = "static/"
+MEDIA_URL = "media/"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # localhost (127.0.0.0:8000)
 if not PRODUCTION:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # liveserver (calltc.berkeley.edu)
 if PRODUCTION:
-    STATIC_ROOT = '/home/c/ca/calttc/public_html/static'
-    MEDIA_ROOT = '/home/c/ca/calttc/public_html/media'
+    STATIC_ROOT = "/home/c/ca/calttc/public_html/static"
+    MEDIA_ROOT = "/home/c/ca/calttc/public_html/media"
 
 # antoniotestserver
 # STATIC_URL = '/~antoniomolteni/static/'
@@ -184,50 +187,50 @@ if PRODUCTION:
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Additional configuration settings
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = "accounts.User"
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 SITE_ID = 1
-LOGIN_URL = '/accounts/google/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = "/accounts/google/login/"
+LOGIN_REDIRECT_URL = "/"
 
 SOCIALACCOUNT_AUTO_SIGNUP = True
-SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_ADAPTER = "accounts.adapters.SocialAccountAdapter"
 
-ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION  = "none"
-ACCOUNT_UNIQUE_EMAIL = True  
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_ADAPTER = "accounts.adapters.AccountAdapter"
 
 
 SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
         ],
-        'AUTH_PARAMS': {
-            'access_type': 'offline',
-        }
+        "AUTH_PARAMS": {
+            "access_type": "offline",
+        },
     }
 }
 
-#email
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_HOST_USER = 'calttc@gmail.com'
-EMAIL_HOST_PASSWORD = 'egufsczbsosptjsd'
+# email
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = "587"
+EMAIL_HOST_USER = "calttc@gmail.com"
+EMAIL_HOST_PASSWORD = "egufsczbsosptjsd"
 EMAIL_USE_TLS = True
