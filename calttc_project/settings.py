@@ -41,6 +41,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "www.ocf.berkeley.edu",
     "calttc.berkeley.edu",
+    "calttc.studentorg.berkeley.edu",
 ]
 # local, antoniotestserver, calttc live server
 
