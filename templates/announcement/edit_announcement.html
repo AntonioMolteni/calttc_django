@@ -1,0 +1,59 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="container-fluid padding">
+	<form action="" method=POST>
+		<div class="row">
+			<div class="col-12">
+				<h1><b>Edit Announcement </b></h1>
+				{% csrf_token %}
+
+					<b>{{ form.title.label }}:</b>
+					{{ form.title }}
+					<b style="color:#FF0000">{{ form.title.errors }}</b>
+
+					<b>{{ form.content.label }}:</b>
+					{{ form.content }}
+					<b style="color:#FF0000">{{ form.content.errors }}</b>
+
+					<b>{{ form.link_text.label }}:</b>
+					{{ form.link_text }}
+					<b style="color:#FF0000">{{ form.link_text.errors }}</b>
+
+					<b>{{ form.link_url.label }}:</b>
+					{{ form.link_url }}
+					<b style="color:#FF0000">{{ form.link_url.errors }}</b>
+
+					<b>{{ form.link_opens_in_new_tab.label }}:</b>
+					{{ form.link_opens_in_new_tab }}
+					<b style="color:#FF0000">{{ form.link_opens_in_new_tab.errors }}</b><br/>
+
+					<b>{{ form.on_home_page.label }}:</b>
+					{{ form.on_home_page }}
+					<b style="color:#FF0000">{{ form.on_home_page.errors }}</b><br/>
+					
+					<b>{{ form.on_schedule_page.label }}:</b>
+					{{ form.on_schedule_page }}
+					<b style="color:#FF0000">{{ form.on_schedule_page.errors }}</b><br/>
+
+					<b>{{ form.on_membership_page.label }}:</b>
+					{{ form.on_membership_page }}
+					<b style="color:#FF0000">{{ form.on_membership_page.errors }}</b><br/>
+					
+					<b>{{ form.on_sessions_page.label }}:</b>
+					{{ form.on_sessions_page }}
+					<b style="color:#FF0000">{{ form.on_sessions_page.errors }}</b><br/>
+
+					<b>{{ form.on_team_page.label }}:</b>
+					{{ form.on_team_page }}
+					<b style="color:#FF0000">{{ form.on_team_page.errors }}</b><br/>
+					
+					<input type="submit" value="Edit Announcement" class="btn btn-outline-info btn-lg">
+
+			</div>
+		</div>
+	</form>
+
+</div>
+
+{% endblock content %}
