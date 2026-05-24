@@ -2,7 +2,7 @@ FROM python:3.14-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PORT=8000
+    PORT=80
 
 WORKDIR /app
 
@@ -30,6 +30,6 @@ RUN pip install --no-cache-dir --upgrade pip \
 
 COPY . .
 
-EXPOSE 8000
+EXPOSE 80
 
 CMD ["sh", "-c", "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn calttc_project.wsgi:application --bind 0.0.0.0:${PORT}"]
