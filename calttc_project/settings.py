@@ -17,33 +17,16 @@ import os
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-$hp0n+-djf$lxomb8+#xdanvy3wze8up4603!p1hnl9oq$0$!2"
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "changeme")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True provides error message and hosts static files while in development.
+# Use environment variable for debug
+DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
+PRODUCTION = not DEBUG
 
-DEBUG = False
-PRODUCTION = True
+# Allow all hosts by default for containerized deployment, override in .env or platform
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
-# Comment this block out for production
-DEBUG = True
-PRODUCTION = False
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-if not PRODUCTION:
-    BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-if PRODUCTION:
-    BASE_DIR = Path(__file__).resolve().parent.parent
-
-ALLOWED_HOSTS = [
-    "10.0.0.95",
-    "127.0.0.1",
-    "www.ocf.berkeley.edu",
-    "calttc.berkeley.edu",
-    "calttc.studentorg.berkeley.edu",
-]
-# local, antoniotestserver, calttc live server
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Application definition
 
@@ -164,11 +147,11 @@ USE_TZ = False
 
 # STATICFILES_DIRS: source of the static files that are copied when you run collect static
 
-STATIC_URL = "static/"
-MEDIA_URL = "media/"
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATIC_URL = "/static/"
+MEDIA_URL = "/media/"
+STATIC_ROOT = os.environ.get("DJANGO_STATIC_ROOT", str(BASE_DIR / "staticfiles"))
+MEDIA_ROOT = os.environ.get("DJANGO_MEDIA_ROOT", str(BASE_DIR / "media"))
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # localhost (127.0.0.0:8000)
 if not PRODUCTION:
@@ -230,8 +213,8 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # email
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = "587"
-EMAIL_HOST_USER = "calttc@gmail.com"
-EMAIL_HOST_PASSWORD = "egufsczbsosptjsd"
-EMAIL_USE_TLS = True
+EMAIL_HOST = os.environ.get("DJANGO_EMAIL_HOST", "smtp.gmail.com")
+EMAIL_PORT = int(os.environ.get("DJANGO_EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.environ.get("DJANGO_EMAIL_HOST_USER", "changeme@example.com")
+EMAIL_HOST_PASSWORD = os.environ.get("DJANGO_EMAIL_HOST_PASSWORD", "changeme")
+EMAIL_USE_TLS = os.environ.get("DJANGO_EMAIL_USE_TLS", "True") == "True"
